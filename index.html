@@ -205,8 +205,6 @@ async function silentRefresh(){
 /* ---------- init ---------- */
 (async function(){
   mergeRows(await KV.loadAll());rebuild();renderAll();refreshSearch();
-  const note=document.getElementById('note');
-  if(KV.mode!=='gas'){note.classList.add('show');note.innerHTML='⚠ いまは<b>このPCのみ</b>に保存中です（メモ・タグは他PCと共有されません）。全員で共有するには配布した <b>GAS_URL</b> を設定してください。';}
   setInterval(silentRefresh,REFRESH_MS);
 })();
 </script></body></html>
