@@ -54,12 +54,12 @@
   .ftag{font-size:clamp(11px,1.2vw,13px);font-weight:700;padding:3px 11px;border-radius:999px;white-space:nowrap;font-family:var(--zen)}
   .ftag.gold{background:#fbf3da;color:#7c5e08}
   .ftag.red{background:#fbe7e4;color:var(--warn)}
-  .ic{width:clamp(58px,6.4vw,82px);height:clamp(58px,6.4vw,82px);border-radius:18px;display:flex;
+  .ic{width:clamp(64px,7.2vw,94px);height:clamp(64px,7.2vw,94px);border-radius:18px;display:flex;
     align-items:center;justify-content:center;border:2.5px solid var(--navy);color:var(--navy);background:#fff;flex:0 0 auto}
   .ic svg{width:52%;height:52%}
   .fnode.ours .ic{border-color:var(--gold);background:var(--gold);color:#fff}
   .fnode.you .ic{border-color:var(--warn);color:var(--warn)}
-  .flab{font-family:var(--zen);font-size:clamp(12px,1.4vw,16px);font-weight:700;color:var(--ink);line-height:1.32}
+  .flab{font-family:var(--zen);font-size:clamp(13px,1.55vw,17px);font-weight:700;color:var(--ink);line-height:1.32}
   .fsub{display:block;font-size:clamp(10px,1.1vw,12.5px);font-weight:500;color:var(--ink-soft);margin-top:4px;line-height:1.45}
   .fchev{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;color:#c4ccd6;padding-top:clamp(42px,5vw,56px)}
   .fchev svg{width:clamp(16px,1.8vw,22px);height:clamp(16px,1.8vw,22px)}
@@ -67,10 +67,10 @@
 
   /* ---------- pictograph ---------- */
   .picto{display:flex;align-items:center;justify-content:center;gap:clamp(22px,4vw,52px);flex-wrap:wrap}
-  .bldgs{display:grid;grid-template-columns:repeat(5,clamp(30px,3.6vw,46px));gap:clamp(7px,1vw,12px)}
+  .bldgs{display:grid;grid-template-columns:repeat(5,clamp(36px,4.3vw,56px));gap:clamp(8px,1.1vw,13px)}
   .bldgs svg{width:100%;height:auto}
   .b-on{color:var(--navy)} .b-off{color:#d6dbe3}
-  .pnum{font-family:var(--zen);font-weight:900;color:var(--gold);font-size:clamp(54px,8vw,104px);line-height:.95}
+  .pnum{font-family:var(--zen);font-weight:900;color:var(--gold);font-size:clamp(62px,9.2vw,120px);line-height:.95}
   .pnum small{font-size:clamp(26px,3.6vw,46px)}
   .sites{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(8px,1vw,12px);margin-top:clamp(22px,3.2vh,32px)}
   .chip{font-family:var(--zen);font-weight:700;font-size:clamp(12px,1.4vw,16px);color:var(--navy);
@@ -104,6 +104,10 @@
   .pres{font-size:clamp(11px,1.3vw,14px);font-weight:500;color:var(--ink-soft);line-height:1.55}
   .pres.pop{font-family:var(--zen);font-size:clamp(26px,3.6vw,46px);font-weight:900;color:var(--gold);line-height:1}
   .pres.pop small{display:block;font-size:clamp(10px,1.2vw,13px);color:var(--ink-soft);font-weight:700;margin-top:4px}
+  .pconn{flex:0 0 auto;align-self:center;max-width:98px;text-align:center;font-family:var(--zen);line-height:1.45}
+  .pconn::before{content:"→";display:block;color:#c4ccd6;font-weight:900;font-size:clamp(16px,2vw,24px);margin-bottom:4px}
+  .pconn span{font-weight:700;font-size:clamp(10px,1.1vw,12.5px);color:var(--ink-soft)}
+  .pconn em{display:block;font-style:normal;font-weight:900;font-size:clamp(10px,1.1vw,12.5px);color:var(--warn);margin-top:6px}
 
   /* ---------- summary roles (slide 6) ---------- */
   .roles{display:flex;align-items:stretch;justify-content:center;gap:clamp(12px,2vw,22px)}
@@ -196,10 +200,10 @@
           <span class="chip">REINS</span>
           <span class="chip">ITANDI</span>
           <span class="chip">管理会社の固有サイト</span>
-          <span class="chip ghost">etc...</span>
+          <span class="chip ghost">etc…</span>
         </div>
         <div class="figcap">SUUMOなど一般向けサイトに載るのは <strong>一部だけ・しかも遅い</strong>。</div>
-        <div class="src">※ 賃貸物件の多くは業者専用サイト（REINS／ATBB／ITANDI 等）に集まる … 割合は業界で一般に言われる目安</div>
+        <div class="src">※ 賃貸物件の多くは業者専用サイト（REINS／ATBB／ITANDI 等）に集まる … 割合は業界で一般に言われる目安（約9割）</div>
       </div>
     </div>
   </section>
@@ -249,13 +253,13 @@
   <section class="slide paper">
     <div class="inner">
       <span class="s-label">SUUMOとの付き合い方</span>
-      <div class="s-catch">SUUMOは、<span class="r">"部屋"</span>を探す場所じゃない。</div>
+      <div class="s-catch">SUUMOは、<span class="r">"部屋を探すツール"</span>じゃない。</div>
       <div class="figure">
         <div class="statbig">3〜5<small>%</small></div>
         <div class="statcap">SUUMOから問い合わせて、その物件で決まる確率</div>
         <div class="downarrow2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15"/><path d="M6 13l6 6 6-6"/></svg></div>
-        <div class="reframe">だからSUUMOは、今回のお部屋探しの<br><b class="g">"パートナー（業者）"を探す場所</b>。</div>
-        <div class="src">※ SUUMO経由の成約割合は公開統計がなく、業界で一般に言われる目安（諸説あり）</div>
+        <div class="reframe">SUUMOは、<b class="g">業者とのマッチングアプリ的な役割</b>。<br>（パートナー探し）</div>
+        <div class="src">※ SUUMO経由の成約割合は公開統計がないが、業界で一般に言われる目安です。</div>
       </div>
     </div>
   </section>
@@ -267,10 +271,12 @@
       <div class="s-catch">SUUMOの新着ではなく、<span class="g">業者サイトの新着</span>を追う。</div>
       <div class="figure">
         <div class="proc">
-          <div class="pcell"><span class="pn">1</span><b>初回（今回）<br>2週間分を一緒に</b><span class="pres pop">約50%<small>がここで決まる</small></span></div>
-          <div class="pcell"><span class="pn">2</span><b>毎日、<span class="g">"業者サイトから"</span><br>新着をお送りします</b><span class="pres">気になったら<br>すぐ教えてください</span></div>
-          <div class="pcell"><span class="pn">3</span><b>2回目の<br>打ち合わせ</b><span class="pres pop">約70%<small>が2回目までに</small></span></div>
-          <div class="pcell"><span class="pn">4</span><b>決まるまで、<br>くり返す</b><span class="pres">一緒に追います</span></div>
+          <div class="pcell"><span class="pn">1</span><b>初回（今回）<br>2週間分を一緒に</b><span class="pres pop">約50%<small>→ ここで決まる</small></span></div>
+          <div class="pconn"><span>できるだけ<br>ここで決定</span><em>決まらなければ</em></div>
+          <div class="pcell"><span class="pn">2</span><b>1週間毎日、<span class="g">"業者サイト"</span><br>から新着をお送り</b><span class="pres">気になったら<br>すぐ教えてください</span></div>
+          <div class="pcell"><span class="pn">3</span><b>2回目の<br>打ち合わせ</b><span class="pres pop">約70%<small>がここまでに決定</small></span></div>
+          <div class="pconn"><em>それでも<br>決まらない場合</em></div>
+          <div class="pcell"><span class="pn">4</span><b>条件内容の<br>精査</b><span class="pres">一緒に条件を<br>見直し・相談</span></div>
         </div>
       </div>
     </div>
@@ -280,7 +286,7 @@
   <section class="slide navy">
     <div class="inner">
       <span class="s-label">まとめ</span>
-      <div class="s-catch">二人で、人気物件の<span class="g">"一番手"</span>を獲る。</div>
+      <div class="s-catch">プロとして本気で、人気物件の<span class="g">"一番手"</span>を獲るサポートをします。</div>
       <div class="figure">
         <div class="roles">
           <div class="role">
