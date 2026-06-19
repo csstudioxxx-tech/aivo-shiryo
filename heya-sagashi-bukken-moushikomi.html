@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>業者サイトの物件と申込み5種類｜投影スライド</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1A3D6B; --navy-deep:#122c4d;
+    --gold:#C99A14; --gold-bright:#F4C430; --gold-pop:#ffd24d;
+    --warn:#D34B3C; --warn-soft:#ffb3a8;
+    --ink:#1e2733; --ink-soft:#5b6573; --faint:#94a0af;
+    --rule:#e6eaf0;
+    --zen:"Zen Kaku Gothic New",sans-serif;
+    --noto:"Noto Sans JP",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--noto);background:#0c1726;overflow:hidden;-webkit-font-smoothing:antialiased}
+
+  .deck{position:fixed;inset:0}
+  .slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    padding:5vh 6vw 96px;opacity:0;visibility:hidden;transition:opacity .3s ease;cursor:pointer}
+  .slide.active{opacity:1;visibility:visible}
+  .slide.paper{background:#fff;color:var(--ink)}
+  .slide.navy{background:radial-gradient(120% 120% at 50% 0%,#234a73 0%,transparent 58%),var(--navy);color:#fff}
+  .inner{width:100%;max-width:1060px;display:flex;flex-direction:column}
+
+  .s-label{font-family:var(--zen);font-weight:700;letter-spacing:.16em;
+    font-size:clamp(13px,1.5vw,17px);display:inline-flex;align-items:center;gap:11px}
+  .s-label::before{content:"";width:26px;height:2px;background:currentColor;opacity:.6}
+  .paper .s-label{color:var(--gold)}
+  .navy .s-label{color:var(--gold-pop)}
+  .s-catch{font-family:var(--zen);font-weight:900;line-height:1.42;margin-top:clamp(14px,2vh,22px);
+    font-size:clamp(28px,4.7vw,53px);letter-spacing:.01em}
+  .paper .s-catch{color:var(--navy)}
+  .navy .s-catch{color:#fff}
+  .s-catch .g{color:var(--gold)} .navy .s-catch .g{color:var(--gold-pop)}
+  .s-catch .r{color:var(--warn)}
+
+  .figure{margin-top:clamp(26px,4.2vh,50px)}
+
+  .brandmark{position:absolute;top:5vh;left:6vw;font-family:var(--zen);font-weight:700;
+    font-size:13px;letter-spacing:.14em;color:rgba(255,255,255,.5)}
+  .title-catch{font-size:clamp(30px,5.4vw,60px);line-height:1.4}
+
+  /* ---------- flow ---------- */
+  .flow{display:flex;align-items:flex-start;justify-content:space-between;gap:.4vw}
+  .fnode{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:clamp(6px,1vh,10px)}
+  .ftslot{min-height:26px;display:flex;align-items:center}
+  .ftag{font-size:clamp(11px,1.2vw,13px);font-weight:700;padding:3px 11px;border-radius:999px;white-space:nowrap;font-family:var(--zen)}
+  .ftag.gold{background:#fbf3da;color:#7c5e08}
+  .ftag.red{background:#fbe7e4;color:var(--warn)}
+  .ic{width:clamp(58px,6.4vw,82px);height:clamp(58px,6.4vw,82px);border-radius:18px;display:flex;
+    align-items:center;justify-content:center;border:2.5px solid var(--navy);color:var(--navy);background:#fff;flex:0 0 auto}
+  .ic svg{width:52%;height:52%}
+  .fnode.ours .ic{border-color:var(--gold);background:var(--gold);color:#fff}
+  .fnode.you .ic{border-color:var(--warn);color:var(--warn)}
+  .flab{font-family:var(--zen);font-size:clamp(12px,1.4vw,16px);font-weight:700;color:var(--ink);line-height:1.32}
+  .fsub{display:block;font-size:clamp(10px,1.1vw,12.5px);font-weight:500;color:var(--ink-soft);margin-top:4px;line-height:1.45}
+  .fchev{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;color:#c4ccd6;padding-top:clamp(42px,5vw,56px)}
+  .fchev svg{width:clamp(16px,1.8vw,22px);height:clamp(16px,1.8vw,22px)}
+  .fchev small{font-size:clamp(9px,1vw,11px);font-weight:700;color:var(--warn);margin-top:4px;white-space:nowrap}
+
+  /* ---------- pictograph ---------- */
+  .picto{display:flex;align-items:center;justify-content:center;gap:clamp(22px,4vw,52px);flex-wrap:wrap}
+  .bldgs{display:grid;grid-template-columns:repeat(5,clamp(30px,3.6vw,46px));gap:clamp(7px,1vw,12px)}
+  .bldgs svg{width:100%;height:auto}
+  .b-on{color:var(--navy)} .b-off{color:#d6dbe3}
+  .pnum{font-family:var(--zen);font-weight:900;color:var(--gold);font-size:clamp(54px,8vw,104px);line-height:.95}
+  .pnum small{font-size:clamp(26px,3.6vw,46px)}
+  .sites{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(8px,1vw,12px);margin-top:clamp(22px,3.2vh,32px)}
+  .chip{font-family:var(--zen);font-weight:700;font-size:clamp(12px,1.4vw,16px);color:var(--navy);
+    background:#eef2f8;border:1.5px solid #d7e0ec;border-radius:999px;padding:6px 16px}
+  .chip.ghost{background:transparent;border-style:dashed;color:var(--faint)}
+  .figcap{text-align:center;font-size:clamp(14px,1.7vw,20px);color:var(--ink-soft);margin-top:clamp(20px,3vh,30px);line-height:1.7;font-family:var(--zen);font-weight:700}
+  .figcap strong{color:var(--navy)}
+  .src{text-align:center;font-size:clamp(10px,1.1vw,12px);color:var(--faint);margin-top:16px;font-family:var(--noto);font-weight:400}
+
+  /* ---------- stat (slide 4) ---------- */
+  .statbig{text-align:center;font-family:var(--zen);font-weight:900;line-height:.95;font-size:clamp(56px,9vw,120px);color:var(--warn)}
+  .statbig small{font-size:clamp(30px,4.5vw,58px)}
+  .statcap{text-align:center;font-family:var(--zen);font-weight:700;color:var(--ink-soft);font-size:clamp(13px,1.6vw,19px);margin-top:clamp(10px,1.6vh,16px)}
+  .downarrow2{display:flex;justify-content:center;color:var(--gold);margin:clamp(10px,1.8vh,18px) 0}
+  .downarrow2 svg{width:clamp(26px,3vw,38px);height:clamp(26px,3vw,38px)}
+  .downarrow2.light{color:var(--gold-pop)}
+  .reframe{max-width:780px;margin:0 auto;text-align:center;background:#f5f8fc;border-radius:18px;
+    padding:clamp(20px,2.8vw,30px) clamp(20px,2.6vw,34px);font-family:var(--zen);font-weight:700;
+    color:var(--navy);font-size:clamp(16px,2.1vw,25px);line-height:1.6}
+  .reframe b{font-weight:900}
+  .reframe b.g{color:var(--gold)}
+
+  /* ---------- process (slide 5) ---------- */
+  .proc{display:flex;align-items:stretch;justify-content:center;gap:clamp(10px,1.4vw,16px)}
+  .pcell{flex:1;max-width:250px;text-align:center;background:#f4f7fc;border-radius:18px;
+    padding:clamp(18px,2.4vw,28px) clamp(12px,1.4vw,18px);display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.4vh,13px)}
+  .pn{width:clamp(30px,3.2vw,40px);height:clamp(30px,3.2vw,40px);border-radius:50%;background:var(--navy);color:#fff;
+    font-family:var(--zen);font-weight:900;font-size:clamp(15px,1.7vw,20px);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .pcell b{font-family:var(--zen);font-size:clamp(13px,1.5vw,17px);font-weight:700;color:var(--ink);line-height:1.4}
+  .pcell b .g{color:var(--gold)}
+  .pres{font-size:clamp(11px,1.3vw,14px);font-weight:500;color:var(--ink-soft);line-height:1.55}
+  .pres.pop{font-family:var(--zen);font-size:clamp(26px,3.6vw,46px);font-weight:900;color:var(--gold);line-height:1}
+  .pres.pop small{display:block;font-size:clamp(10px,1.2vw,13px);color:var(--ink-soft);font-weight:700;margin-top:4px}
+
+  /* ---------- summary roles (slide 6) ---------- */
+  .roles{display:flex;align-items:stretch;justify-content:center;gap:clamp(12px,2vw,22px)}
+  .role{flex:1;max-width:330px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:18px;padding:clamp(15px,2vw,22px) clamp(14px,1.6vw,22px);
+    display:flex;flex-direction:column;align-items:center;text-align:center;gap:clamp(9px,1.2vh,13px)}
+  .rtag{font-family:var(--zen);font-weight:900;font-size:clamp(12px,1.4vw,16px);padding:4px 14px;border-radius:999px;
+    background:rgba(255,255,255,.16);color:#fff}
+  .rtag.gold{background:var(--gold-pop);color:var(--navy)}
+  .ric{width:clamp(46px,5vw,60px);height:clamp(46px,5vw,60px);border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.1);color:#fff}
+  .ric svg{width:54%;height:54%}
+  .rtxt{font-family:var(--zen);font-weight:700;color:#eaf0f8;font-size:clamp(14px,1.8vw,21px);line-height:1.5}
+  .rtxt b{color:var(--gold-pop);font-weight:900}
+  .rplus{align-self:center;font-family:var(--zen);font-weight:900;color:var(--gold-pop);font-size:clamp(20px,2.6vw,32px)}
+  .result{max-width:700px;margin:0 auto;text-align:center;background:var(--gold-pop);color:var(--navy);
+    border-radius:16px;padding:clamp(13px,1.8vw,20px) clamp(20px,2.6vw,30px);font-family:var(--zen);font-weight:900;
+    font-size:clamp(18px,2.3vw,28px);line-height:1.4}
+  .closing{max-width:700px;margin:clamp(12px,2vh,18px) auto 0;text-align:center;color:rgba(255,255,255,.8);
+    font-size:clamp(12.5px,1.5vw,16px);line-height:1.85;font-family:var(--noto)}
+
+  /* ---------- nav ---------- */
+  .nav{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:30;
+    display:flex;align-items:center;gap:14px;background:rgba(14,24,40,.82);
+    backdrop-filter:blur(8px);padding:8px 14px;border-radius:999px;box-shadow:0 8px 24px -10px rgba(0,0,0,.5)}
+  .nav button{font-family:var(--zen);font-weight:700;border:none;background:rgba(255,255,255,.12);color:#fff;
+    width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;transition:.15s}
+  .nav button:hover{background:rgba(255,255,255,.26)}
+  .counter{color:#fff;font-family:var(--zen);font-weight:700;font-size:13px;min-width:42px;text-align:center;letter-spacing:.04em}
+  .dots{display:flex;gap:7px;margin:0 4px}
+  .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.28);cursor:pointer;transition:.15s;border:none;padding:0}
+  .dot.on{background:var(--gold-pop);transform:scale(1.15)}
+  .fsbtn{position:fixed;top:16px;right:18px;z-index:30;font-family:var(--zen);font-weight:700;font-size:12px;
+    border:none;background:rgba(14,24,40,.72);color:#fff;padding:8px 13px;border-radius:999px;cursor:pointer;backdrop-filter:blur(8px)}
+  .fsbtn:hover{background:rgba(14,24,40,.95)}
+  .hintbar{position:fixed;bottom:62px;left:50%;transform:translateX(-50%);z-index:20;color:rgba(255,255,255,.4);
+    font-size:11px;font-family:var(--noto);pointer-events:none;transition:opacity .4s;white-space:nowrap}
+
+  @media(max-width:760px){
+    .slide{padding:5vh 7vw}
+    .flow{flex-direction:column;align-items:center;gap:0}
+    .fchev{transform:rotate(90deg);padding-top:0;margin:6px 0}
+    .fchev small{display:none}
+    .ftslot{min-height:0}
+    .proc{flex-direction:column;align-items:center}
+    .pcell{max-width:none;width:100%;flex-direction:row;justify-content:flex-start;text-align:left;gap:16px}
+    .roles{flex-direction:column;align-items:center}
+    .rplus{padding:2px 0}
+    .statbig{font-size:clamp(48px,16vw,80px)}
+    .reframe br{display:none}
+    .s-catch,.title-catch{font-size:clamp(24px,7vw,34px)}
+  }
+
+  /* ===== deck add-on components ===== */
+  .src.center{text-align:center}
+  .contrast{display:flex;flex-direction:column;gap:clamp(13px,2vh,18px);max-width:780px;margin:0 auto}
+  .crow{display:flex;align-items:center;gap:clamp(14px,2vw,22px);border-radius:16px;padding:clamp(15px,2.1vw,23px) clamp(18px,2.5vw,30px);font-family:var(--zen);font-weight:700}
+  .crow .mk{flex:0 0 auto;width:clamp(34px,3.6vw,46px);height:clamp(34px,3.6vw,46px);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:clamp(20px,2.4vw,30px);font-weight:900}
+  .crow .ctxt{font-size:clamp(15px,1.95vw,24px);line-height:1.45}
+  .paper .crow.bad{background:#fdf0ee}.paper .crow.bad .mk{background:#f6d6d1;color:var(--warn)}.paper .crow.bad .ctxt{color:var(--ink)}
+  .navy .crow.bad{background:rgba(255,255,255,.07)}.navy .crow.bad .mk{background:rgba(211,75,60,.22);color:var(--warn-soft)}.navy .crow.bad .ctxt{color:#d7dde6}
+  .crow.good{background:var(--gold-pop)}.crow.good .mk{background:rgba(26,61,107,.15);color:var(--navy)}.crow.good .ctxt{color:var(--navy)}
+  .vs{display:flex;align-items:stretch;justify-content:center;gap:clamp(14px,2.5vw,28px)}
+  .vcol{flex:1;max-width:400px;border-radius:18px;padding:clamp(22px,3vw,34px) clamp(16px,2vw,26px);text-align:center;display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.4vh,14px)}
+  .vcol.a{background:#eef2f8}.vcol.b{background:#fbf3da}
+  .vcol .vh{font-family:var(--zen);font-weight:900;font-size:clamp(16px,1.9vw,23px)}
+  .vcol.a .vh{color:var(--navy)}.vcol.b .vh{color:#7c5e08}
+  .vcol .vl{font-size:clamp(12.5px,1.5vw,16px);color:var(--ink-soft);line-height:1.6}
+  .vcol .vl b{color:var(--ink)}
+  .vmid{align-self:center;font-family:var(--zen);font-weight:900;color:var(--faint);font-size:clamp(15px,1.8vw,22px)}
+  .tlist{display:flex;flex-direction:column;gap:clamp(8px,1.3vh,12px);max-width:880px;margin:0 auto}
+  .tcard{display:flex;gap:clamp(12px,1.6vw,18px);align-items:flex-start;background:#f5f8fc;border-radius:14px;padding:clamp(13px,1.6vw,18px) clamp(15px,2vw,22px)}
+  .tcard.warn{background:#fdf3f1}
+  .tnum{flex:0 0 auto;width:clamp(28px,3vw,38px);height:clamp(28px,3vw,38px);border-radius:50%;background:var(--navy);color:#fff;font-family:var(--zen);font-weight:900;font-size:clamp(13px,1.5vw,17px);display:flex;align-items:center;justify-content:center}
+  .tb{flex:1}
+  .ttag{display:inline-block;font-family:var(--zen);font-weight:700;font-size:clamp(10px,1.1vw,12px);padding:2px 9px;border-radius:999px;margin-bottom:4px}
+  .ttag.before{background:#fbf3da;color:#7c5e08}
+  .ttag.after{background:#e7ecf3;color:var(--ink-soft)}
+  .ttt{font-family:var(--zen);font-weight:700;font-size:clamp(14px,1.6vw,18px);color:var(--ink);line-height:1.4}
+  .ttt .r{color:var(--warn)}
+  .ttd{font-size:clamp(12px,1.4vw,15px);color:var(--ink-soft);margin-top:2px;line-height:1.55}
+  .reframe.warn{background:#fdf0ee;color:var(--warn)}.reframe.warn b{color:var(--warn)}
+  .tlist.compact{gap:clamp(6px,.8vh,9px)}
+  .tlist.compact .tcard{padding:clamp(9px,1.2vw,13px) clamp(15px,2vw,22px)}
+  .tlist.compact .ttd{font-size:clamp(11.5px,1.3vw,14px);margin-top:1px}
+  /* ===== summary (matome) page ===== */
+  .recap{display:flex;flex-direction:column;gap:clamp(12px,1.9vh,18px);max-width:800px;margin:0 auto}
+  .rpoint{display:flex;align-items:center;gap:clamp(14px,2vw,20px)}
+  .rpoint .rk{flex:0 0 auto;width:clamp(34px,3.6vw,46px);height:clamp(34px,3.6vw,46px);border-radius:50%;background:var(--gold-pop);color:var(--navy);display:flex;align-items:center;justify-content:center}
+  .rpoint .rk svg{width:56%;height:56%}
+  .rpoint .rt{font-family:var(--zen);font-weight:700;font-size:clamp(15px,2vw,24px);color:#fff;line-height:1.45}
+  .rpoint .rt .g{color:var(--gold-pop)}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <section class="slide navy active">
+    <div class="brandmark">Ai-voyage ｜ 賃貸企画室</div>
+    <div class="inner">
+      <span class="s-label">業者サイトの物件と申込み</span>
+      <div class="s-catch">業者サイトの物件は、<br><span class="g">"鮮度"</span>と<span class="g">"申込みの型"</span>がカギ。</div>
+    </div>
+  </section>
+
+  <section class="slide paper">
+    <div class="inner">
+      <span class="s-label">業者サイトの物件の特徴</span>
+      <div class="s-catch">人気物件は、掲載から<span class="r">"3時間"</span>で消える。</div>
+      <div class="figure">
+        <div class="statbig">3<small>時間</small></div>
+        <div class="statcap">早い物件が「申込み済み」になるまで（※ 一例）</div>
+        <div class="downarrow2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15"/><path d="M6 13l6 6 6-6"/></svg></div>
+        <div class="reframe">SUUMOに載る前・載らない物件も多い。<br>退去申請が出た<b class="g">"ホヤホヤ"</b>の、直近2日がいちばん熱い。</div>
+        <div class="src center">※ スピードは物件・管理会社によって異なります</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide paper">
+    <div class="inner">
+      <span class="s-label">申込みは、全部で5種類</span>
+      <div class="s-catch">物件には、<span class="g">"退去済み"</span>と<span class="g">"退去前"</span>がある。</div>
+      <div class="figure" style="margin-top:clamp(12px,1.8vh,22px)">
+        <div class="tlist compact">
+          <div class="tcard"><div class="tnum">1</div><div class="tb"><span class="ttag after">退去済み</span><div class="ttt">普通申込</div><div class="ttd">内見して、気に入れば申込み。申込みから2〜3週間で入居。</div></div></div>
+          <div class="tcard"><div class="tnum">2</div><div class="tb"><span class="ttag before">退去前</span><div class="ttt">① 先行申込</div><div class="ttd">先に審査 → 退去後に内見 → 内見してから契約を判断。</div></div></div>
+          <div class="tcard warn"><div class="tnum">3</div><div class="tb"><span class="ttag before">退去前</span><div class="ttt">② 先行契約 <span class="r">（契約後キャンセル不可）</span></div><div class="ttd">内見せずに契約まで。人気・好条件の物件で多い。</div></div></div>
+          <div class="tcard"><div class="tnum">4</div><div class="tb"><span class="ttag before">退去前</span><div class="ttt">③ 先行契約優先の先行申込</div><div class="ttd">先行申込で1番手でも、先行契約が優先される。たまにある。</div></div></div>
+          <div class="tcard"><div class="tnum">5</div><div class="tb"><span class="ttag before">退去前</span><div class="ttt">④ 普通申込しか受けない物件</div><div class="ttd">内見後でないと申込めない（審査もまだ）。</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide paper">
+    <div class="inner">
+      <span class="s-label">退去前の、ここが肝心</span>
+      <div class="s-catch">「先行申込」と「先行契約」は、<span class="r">別物</span>。</div>
+      <div class="figure">
+        <div class="vs">
+          <div class="vcol a"><div class="vh">先行申込</div><div class="vl">先に審査 → 退去後に<b>内見できる</b> → 内見してから契約を判断</div></div>
+          <div class="vmid">VS</div>
+          <div class="vcol b"><div class="vh">先行契約</div><div class="vl"><b>内見せず</b>契約まで進む。<br>契約後は<b>キャンセル不可</b></div></div>
+        </div>
+        <div class="src center">※ 先行契約は、写真・間取り・周辺環境をしっかり確認した上でご判断ください</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide paper">
+    <div class="inner">
+      <span class="s-label">その他のパターン</span>
+      <div class="s-catch">順番は、必ずしも<span class="r">"早い者勝ち"</span>じゃない。</div>
+      <div class="figure">
+        <div class="tlist">
+          <div class="tcard"><div class="tnum">3</div><div class="tb"><div class="ttt">先行契約優先の先行申込</div><div class="ttd">先行申込で1番手を取っていても、先行契約の人が優先されることがある。</div></div></div>
+          <div class="tcard"><div class="tnum">4</div><div class="tb"><div class="ttt">普通申込しか受け付けない物件</div><div class="ttd">オーナーの意向で、内見後にしか申込みを受け付けない。</div></div></div>
+        </div>
+        <div class="reframe" style="margin-top:clamp(16px,2.4vh,24px)">申込みの優先順位・受付方法は、<b class="g">管理会社ごとに違います</b>。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide navy">
+    <div class="inner">
+      <span class="s-label">いちばん大事</span>
+      <div class="s-catch">良い物件は、<span class="g">"翌朝・翌夜"</span>に動く。</div>
+      <div class="figure">
+        <div class="contrast">
+          <div class="crow bad"><span class="mk">✕</span><span class="ctxt">水曜に見つけて、土日の内見まで待つ</span></div>
+          <div class="crow good"><span class="mk">◯</span><span class="ctxt">気になったら、翌朝か翌夜にすぐ動く</span></div>
+        </div>
+        <div class="closing">クリーニング後に公開される物件は、特に秒で取られます。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide navy">
+    <div class="inner">
+      <span class="s-label">まとめ</span>
+      <div class="s-catch">押さえるのは、<span class="g">この3つ</span>。</div>
+      <div class="figure">
+        <div class="recap">
+          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">良い物件は<span class="g">"鮮度"</span>が命。気になったら翌朝・翌夜に動く。</span></div>
+          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">申込みは<span class="g">全5種類</span>。退去前なら、先に動ける。</span></div>
+          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">「先行契約」は内見せず契約・<span class="g">キャンセル不可</span>。判断は慎重に。</span></div>
+        </div>
+        <div class="closing">どの申込みがベストか、私たちが一緒に見極めます。</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<button class="fsbtn" id="fs">⛶ 全画面</button>
+<div class="hintbar" id="hint">← → ／ スペース ／ クリック でめくれます</div>
+<div class="nav">
+  <button id="prev" aria-label="前へ">‹</button>
+  <div class="dots" id="dots"></div>
+  <span class="counter" id="counter">1 / 6</span>
+  <button id="next" aria-label="次へ">›</button>
+</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const total=slides.length;
+  let idx=0;
+  const counter=document.getElementById('counter');
+  const dotsWrap=document.getElementById('dots');
+  slides.forEach((_,i)=>{const d=document.createElement('button');d.className='dot'+(i===0?' on':'');
+    d.addEventListener('click',e=>{e.stopPropagation();go(i);});dotsWrap.appendChild(d);});
+  const dots=[...dotsWrap.children];
+  function go(i){idx=(i+total)%total;
+    slides.forEach((s,k)=>s.classList.toggle('active',k===idx));
+    dots.forEach((d,k)=>d.classList.toggle('on',k===idx));
+    counter.textContent=(idx+1)+' / '+total;}
+  function next(){go(idx+1);} function prev(){go(idx-1);}
+  document.getElementById('next').addEventListener('click',e=>{e.stopPropagation();next();});
+  document.getElementById('prev').addEventListener('click',e=>{e.stopPropagation();prev();});
+  document.getElementById('deck').addEventListener('click',next);
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight',' ','PageDown','Enter'].includes(e.key)){e.preventDefault();next();}
+    else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();prev();}
+    else if(e.key==='Home'){go(0);} else if(e.key==='End'){go(total-1);}
+    else if(e.key.toLowerCase()==='f'){toggleFs();}
+  });
+  function toggleFs(){if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+    else{document.exitFullscreen&&document.exitFullscreen();}}
+  document.getElementById('fs').addEventListener('click',e=>{e.stopPropagation();toggleFs();});
+  setTimeout(()=>{const h=document.getElementById('hint');if(h)h.style.opacity='0';},4200);
+</script>
+</body>
+</html>
