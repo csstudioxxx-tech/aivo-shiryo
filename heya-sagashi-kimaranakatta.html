@@ -193,8 +193,8 @@
   .rpoint .rk svg{width:56%;height:56%}
   .rpoint .rt{font-family:var(--zen);font-weight:700;font-size:clamp(15px,2vw,24px);color:#fff;line-height:1.45}
   .rpoint .rt .g{color:var(--gold-pop)}
-.deck-next{position:fixed;inset:0;display:none;z-index:25;background:rgba(12,26,46,.66);text-align:center;font-family:'Zen Kaku Gothic New','Noto Sans JP',sans-serif;overflow:auto}
-.deck-next.show{display:block}
+.deck-next{position:fixed;inset:0;z-index:25;background:rgba(9,18,34,.78);-webkit-backdrop-filter:blur(10px) grayscale(.85) brightness(.5);backdrop-filter:blur(10px) grayscale(.85) brightness(.5);text-align:center;font-family:'Zen Kaku Gothic New','Noto Sans JP',sans-serif;overflow:auto;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .28s ease,visibility .28s ease}
+.deck-next.show{opacity:1;visibility:visible;pointer-events:auto}
 .en-kick{display:inline-block;margin-top:clamp(36px,6.6vh,62px);background:#F4C430;color:#1A3D6B;font-weight:900;font-size:clamp(12px,1.3vw,15px);letter-spacing:.12em;padding:5px 16px;border-radius:999px}
 .en-head{margin:clamp(12px,2vh,18px) auto 0;max-width:1000px;color:#fff;font-weight:900;font-size:clamp(18px,2.35vw,30px);line-height:1.42;padding:0 24px}
 .en-sub{margin-top:10px;color:rgba(255,255,255,.8);font-size:clamp(12px,1.4vw,16px);font-weight:500;font-family:'Noto Sans JP',sans-serif}
@@ -316,10 +316,7 @@
   </div>
   <div class="en-bar">
     <a class="en-ghost" href="index.html">☰ 資料一覧へ戻る</a>
-    <span class="en-grp"><span class="eg-lbl">⚙ ツール</span>
-      <a class="en-tbtn" href="chrome-extension://cenbkpihcaebbkpekpcmfjigfldoomnb/override.html" target="_blank" rel="noopener">業者サイト一括アプリ<span class="eg-ar">↗</span></a>
-      <a class="en-tbtn" href="https://atbb.athome.jp/" target="_blank" rel="noopener">ATBB<span class="eg-ar">↗</span></a>
-    </span>
+    <a class="en-tbtn" href="https://atbb.athome.jp/" target="_blank" rel="noopener">ATBB を開く<span class="eg-ar">↗</span></a>
   </div>
 </div>
 <button class="fsbtn" id="fs">⛶ 全画面</button>
@@ -334,17 +331,20 @@
 <script>
   const slides=[...document.querySelectorAll('.slide')];
   const total=slides.length;
-  let idx=0;
+  let idx=0, navOpen=false;
+  const dn=document.getElementById('deckNext');
+  function setNav(o){navOpen=o;if(dn)dn.classList.toggle('show',o);}
   const counter=document.getElementById('counter');
   const dotsWrap=document.getElementById('dots');
   slides.forEach((_,i)=>{const d=document.createElement('button');d.className='dot'+(i===0?' on':'');
     d.addEventListener('click',e=>{e.stopPropagation();go(i);});dotsWrap.appendChild(d);});
   const dots=[...dotsWrap.children];
-  function go(i){idx=(i+total)%total;
+  function go(i){idx=(i+total)%total;setNav(false);
     slides.forEach((s,k)=>s.classList.toggle('active',k===idx));
     dots.forEach((d,k)=>d.classList.toggle('on',k===idx));
-    counter.textContent=(idx+1)+' / '+total;var dn=document.getElementById('deckNext');if(dn)dn.classList.toggle('show',idx===total-1);}
-  function next(){go(idx+1);} function prev(){go(idx-1);}
+    counter.textContent=(idx+1)+' / '+total;}
+  function next(){if(idx===total-1){if(!navOpen)setNav(true);return;}go(idx+1);}
+  function prev(){if(navOpen){setNav(false);return;}go(idx-1);}
   document.getElementById('next').addEventListener('click',e=>{e.stopPropagation();next();});
   document.getElementById('prev').addEventListener('click',e=>{e.stopPropagation();prev();});
   document.getElementById('deck').addEventListener('click',next);
