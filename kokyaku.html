@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>顧客マップ｜Ai-voyage 賃貸企画室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1A3D6B;--gold:#C99A14;--gold-bright:#F4C430;
+  --ink:#1d1d1f;--ink2:#6e6e73;--faint:#86868b;
+  --line:#e5e5ea;--paper:#f5f5f7;--card:#fff;
+  --blue:#0a84ff;--green:#30b06a;--yellow:#e0a400;--red:#ff3b30;
+  --accent:#0071e3;
+  --zen:"Zen Kaku Gothic New",sans-serif;--noto:"Noto Sans JP",-apple-system,BlinkMacSystemFont,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--noto);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;height:100vh;overflow:hidden}
+.app{display:flex;height:100vh}
+/* sidebar */
+.side{width:262px;flex:none;background:rgba(245,245,247,.94);border-right:1px solid #e0e0e5;padding:20px 14px;overflow:auto}
+.side .logo{font-size:12px;font-weight:700;color:var(--faint);padding:0 6px}
+.side .title{font-family:var(--zen);font-size:19px;font-weight:800;padding:4px 6px 14px}
+.side .lab{font-size:11px;font-weight:700;color:var(--faint);padding:0 8px 7px}
+.tantos{display:flex;flex-wrap:wrap;gap:6px;padding:0 4px 14px}
+.tchip{font-size:12px;font-weight:700;border-radius:999px;padding:6px 13px;cursor:pointer;background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.tchip.on{background:var(--accent);color:#fff;box-shadow:none}
+.divider{border-top:1px solid #e0e0e5;margin:2px 6px 12px}
+.navbtn{font-size:13.5px;font-weight:700;border-radius:11px;padding:11px 14px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--ink)}
+.navbtn:hover{background:#ececf0}
+.navbtn.on{background:var(--ink);color:#fff}
+.lines{margin-top:4px}
+.lrow{display:flex;align-items:center;gap:8px;padding:10px 13px;border-radius:11px;margin-bottom:3px;cursor:pointer}
+.lrow:hover{background:#ececf0}
+.lrow.on{background:var(--accent)}
+.lrow.on:hover{background:var(--accent)}
+.lrow .ln{flex:1;font-size:13.5px;font-weight:600}
+.lrow.on .ln{color:#fff;font-weight:700}
+.badge{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;border-radius:999px;font-size:11px;font-weight:800;color:#fff;line-height:1}
+.b-tot{background:var(--accent)}
+.lrow.on .b-tot{background:rgba(255,255,255,.28)}
+.b-staff{background:var(--red)}
+.uprow{margin-top:6px}
+.uprow.navbtn{background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.uprow.navbtn:hover{background:#f2f2f4}
+/* main */
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.mhead{padding:22px 30px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.mhead h1{font-size:22px;font-weight:800;letter-spacing:-.01em}
+.mhead .sp{flex:1}
+.tg{font-size:12.5px;color:var(--ink2);font-weight:600;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer;user-select:none}
+.tg.on{background:#fff7e0;border-color:#e9d7a0;color:#7c5e08}
+.addbtn{font-family:var(--zen);font-weight:900;font-size:12.5px;background:var(--gold-bright);color:var(--navy);border:none;border-radius:999px;padding:8px 16px;cursor:pointer}
+.scroll{flex:1;overflow:auto;padding:22px 30px 70px}
+/* map */
+.plot{position:relative}
+.sthdr{position:absolute;top:0;font-size:12px;font-weight:600;color:var(--ink2);transform:translateX(-50%);white-space:nowrap}
+.vline{position:absolute;border-left:1px solid #e5e5ea}
+.vtick{position:absolute;width:5px;height:5px;border-radius:50%;background:#d3d6dd;transform:translateX(-50%)}
+.hline{position:absolute;left:0;border-top:1px solid #ececf0}
+.bandlbl{position:absolute;text-align:right;font-size:12px;font-weight:600;color:var(--ink2)}
+.bar{position:absolute;height:30px;border-radius:10px;display:flex;align-items:center;gap:6px;padding:0 10px;overflow:hidden;white-space:nowrap;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.bar:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(0,0,0,.18);z-index:7}
+.bar .pri{font-weight:800;font-size:10px;color:#fff;border-radius:5px;padding:1px 6px;flex:none}
+.bar .nm{font-weight:700;font-size:12.5px}
+.bar .tnt{font-size:10px;font-weight:800;border-radius:6px;padding:1px 7px;flex:none}
+.bar .meta{font-size:10.5px;font-weight:600}
+.lrowcard .tnt{font-size:11px;font-weight:800;border-radius:7px;padding:3px 9px;background:#eef2f8;color:var(--navy)}
+.bar .d{font-size:10px;font-weight:800;margin-left:auto;flex:none}
+.ep{position:absolute;width:9px;height:9px;border-radius:50%;transform:translate(-50%,-50%);z-index:6;border:2px solid #fff}
+.empty{color:var(--faint);font-weight:600;font-size:13px;padding:20px 4px}
+.legend{display:flex;gap:13px;font-size:11.5px;font-weight:600;color:var(--faint);margin-top:20px;align-items:center;flex-wrap:wrap}
+.legend .sw{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:5px;vertical-align:-1px}
+/* my list */
+.searchrow{display:flex;gap:10px;margin-bottom:16px}
+.searchbox{flex:1;background:#fff;border-radius:12px;padding:11px 15px;display:flex;align-items:center;gap:9px;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.searchbox input{border:none;outline:none;font-family:var(--noto);font-size:14px;width:100%;background:transparent}
+.sortbtn{background:#fff;color:var(--ink);font-size:12.5px;font-weight:600;border:none;border-radius:12px;padding:11px 15px;box-shadow:0 1px 2px rgba(0,0,0,.08);cursor:pointer}
+.lrowcard{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:13px 16px;margin-bottom:9px;box-shadow:0 1px 3px rgba(0,0,0,.06);cursor:pointer}
+.lrowcard:hover{box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.lrowcard .pri{font-weight:800;font-size:11px;color:#fff;border-radius:6px;padding:2px 8px;flex:none}
+.lrowcard .nm{font-weight:800;font-size:15px;min-width:96px}
+.lntag{font-size:12px;color:var(--accent);font-weight:800;background:#eaf3fe;border-radius:7px;padding:3px 9px}
+.lrowcard .mt{font-size:12.5px;color:var(--ink2);font-weight:600}
+.chev{color:#c7c7cc;font-size:18px;margin-left:auto}
+.dchip{font-size:11px;font-weight:800;border-radius:7px;padding:3px 9px}
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(10,20,38,.45);opacity:0;visibility:hidden;transition:.2s;z-index:40}
+.scrim.on{opacity:1;visibility:visible}
+.drawer{position:fixed;top:0;right:0;width:430px;max-width:94vw;height:100%;background:#fff;box-shadow:-12px 0 40px rgba(0,0,0,.25);transform:translateX(100%);transition:transform .25s;z-index:41;display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.dh{padding:18px 20px;border-bottom:1px solid var(--line)}
+.dh .x{float:right;font-size:20px;color:var(--faint);cursor:pointer;line-height:1}
+.dh .nm{font-family:var(--zen);font-weight:900;font-size:20px}
+.dh .tags{display:flex;gap:7px;margin-top:8px;flex-wrap:wrap}
+.tagp{font-size:11px;font-weight:800;border-radius:999px;padding:3px 9px}
+.db{flex:1;overflow:auto;padding:16px 20px 30px}
+.sec{margin-bottom:16px}
+.sec h3{font-family:var(--zen);font-size:12px;font-weight:900;color:var(--navy);margin-bottom:8px}
+.kv{display:flex;gap:10px;font-size:13px;margin-bottom:5px}
+.kv .k{color:var(--faint);font-weight:700;min-width:86px}
+.kv .v{font-weight:700}
+.linerow{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.linerow .ln{font-weight:800;font-size:12.5px;color:var(--navy);min-width:84px}
+.minibar{flex:1;height:22px;background:#f1f4f8;border-radius:6px;position:relative}
+.minibar .seg{position:absolute;top:0;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10.5px;font-weight:800;white-space:nowrap;padding:0 6px}
+.equip{display:flex;flex-wrap:wrap;gap:6px}
+.eq{font-size:11.5px;font-weight:700;border-radius:999px;padding:4px 10px}
+.eq.must{background:#fdebe9;color:#a8392f}
+.eq.want{background:#eef2f8;color:var(--navy)}
+.pdf{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:9px 11px;margin-bottom:8px}
+.pdf .ic{color:var(--red);font-weight:900;font-size:12px;margin-top:2px}
+.pdf a{color:var(--accent);font-weight:800;font-size:13px;text-decoration:none}
+.pdf .pm{font-size:11.5px;color:var(--ink2);margin-top:2px}
+.note{background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:12.5px;color:var(--ink2);line-height:1.6;white-space:pre-wrap}
+.btnrow{display:flex;gap:8px;margin-top:6px}
+.btn{font-family:var(--zen);font-weight:900;font-size:12.5px;border-radius:999px;padding:10px 16px;cursor:pointer;border:none}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.ghost{background:#fff;border:1.5px solid var(--line);color:var(--navy)}
+.btn.danger{background:#fff;border:1.5px solid #f3c2bd;color:var(--red)}
+.btn.full{width:100%;justify-content:center;display:flex}
+/* modal */
+.modal{position:fixed;inset:0;display:none;align-items:flex-start;justify-content:center;z-index:50;background:rgba(10,20,38,.45);overflow:auto;padding:30px 16px}
+.modal.on{display:flex}
+.sheet{background:#fff;border-radius:18px;width:640px;max-width:96vw;box-shadow:0 24px 60px rgba(0,0,0,.4);margin:auto}
+.sheet .mh{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center}
+.sheet .mh h2{font-family:var(--zen);font-size:18px;font-weight:900}
+.sheet .mh .x{margin-left:auto;font-size:20px;color:var(--faint);cursor:pointer}
+.sheet .mb{padding:18px 22px;max-height:72vh;overflow:auto}
+.sheet .mf{padding:14px 22px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end}
+.fg{margin-bottom:14px}
+.fg>label{display:block;font-size:11.5px;font-weight:800;color:var(--ink2);margin-bottom:5px}
+.in{font-family:var(--noto);font-size:14px;font-weight:600;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:9px 11px;width:100%;outline:none}
+.in:focus{border-color:var(--gold)}
+textarea.in{resize:vertical;min-height:56px;line-height:1.5}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.segb{font-size:12.5px;font-weight:700;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 13px;cursor:pointer}
+.segb.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+/* equipment drag */
+.eqwrap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.eqcol{background:#f7f8fa;border:1.5px dashed #d8dde6;border-radius:12px;padding:10px;min-height:120px}
+.eqcol.must{border-color:#f3c2bd;background:#fdf3f1}
+.eqcol.want{border-color:#bcd0ef;background:#f1f6fd}
+.eqcol h4{font-size:11.5px;font-weight:900;margin-bottom:8px;color:var(--ink2)}
+.eqcol.must h4{color:#a8392f}.eqcol.want h4{color:var(--navy)}
+.eqitem{font-size:12px;font-weight:700;background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 9px;margin-bottom:6px;cursor:grab;user-select:none}
+.eqitem:active{cursor:grabbing}
+.eqitem.drag{opacity:.4}
+.lineblock{border:1px solid var(--line);border-radius:12px;padding:11px;margin-bottom:10px}
+.lineblock .lh{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.lineblock .lh .x{margin-left:auto;color:var(--faint);cursor:pointer;font-weight:800}
+.small{font-size:11px;color:var(--faint)}
+.addline{font-size:12.5px;font-weight:800;color:var(--accent);cursor:pointer}
+.upinfo{background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:12px;color:var(--ink2);line-height:1.6;margin-bottom:12px}
+.stationchk{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.scbox{display:flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:5px 9px;font-size:12px;font-weight:700}
+.cloud{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:12.5px;font-weight:700;padding:9px 18px;border-radius:999px;z-index:60;opacity:0;transition:opacity .25s}
+.cloud.on{opacity:.95}
+.synctag{font-size:11px;font-weight:700;color:var(--faint);border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:#fff}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="side" id="side"></div>
+  <div class="main">
+    <div class="mhead" id="mhead"></div>
+    <div class="scroll" id="scroll"></div>
+  </div>
+</div>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer"></aside>
+<div class="modal" id="modal"></div>
+<div class="cloud" id="cloud"></div>
+
+<script>
+/* =========================================================
+   Ai-voyage 顧客マップ  build: kokyaku concurrent-safe v1
+   - 1顧客 = 1レコード(KV行) / updatedAtガード / 沿線も1行
+   - GAS_URL 未設定時は端末内(localStorage)で動作
+   ========================================================= */
+const CFG = {
+  GAS_URL: "https://script.google.com/macros/s/AKfycbwQQCKeKula-9iX_is1FCBOfkU1SBnT9sOmG7Fx5OqlALmwPQepgwwkeEK1-KF07XkLPg/exec", // 全体共有ON
+  LS_PREFIX: "aivo-kokyaku:",  // localStorageの名前空間
+  POLL_MS: 30000
+};
+const EQUIP = ['バストイレ別','独立洗面台','2口コンロ以上','南向き','オートロック','2階以上','ペット可','角部屋','都市ガス','駐車場','バイク置き場','クローゼット大きめ'];
+const BANDS = [
+  {key:'15',label:'15万以上',min:150000,max:999999},
+  {key:'13',label:'13万台',min:130000,max:149999},
+  {key:'11',label:'11万台',min:110000,max:129999},
+  {key:'10',label:'10万台',min:100000,max:109999},
+  {key:'9', label:'9万台', min:90000, max:99999},
+  {key:'8', label:'〜8万', min:0,     max:89999}
+];
+function bandIndexFromRent(r){
+  const n = parseInt(String(r).replace(/[^0-9]/g,''),10);
+  let v = isNaN(n)?0:n;
+  if(v>0 && v<1000) v=v*10000;          // 「9」「11」→ 90000/110000 と解釈
+  for(let i=0;i<BANDS.length;i++){ if(v>=BANDS[i].min && v<=BANDS[i].max) return i; }
+  return BANDS.length-1;
+}
+const TANTO = ['弘中','横山','宮本','田邊','生沼'];
+const PCOL = {A:'#ff3b30',B:'#e0a400',C:'#8a8a8e'};
+
+/* 内蔵沿線（"*"=急行/主要停車駅 → ラベル表示。全駅順は位置計算に使用） */
+const BUILTIN_LINES = {
+ '小田急線':'*新宿,南新宿,参宮橋,代々木八幡,*代々木上原,東北沢,*下北沢,世田谷代田,梅ヶ丘,豪徳寺,経堂,千歳船橋,祖師ヶ谷大蔵,*成城学園前,喜多見,狛江,和泉多摩川,*登戸,向ヶ丘遊園,生田,読売ランド前,百合ヶ丘,*新百合ヶ丘,柿生,鶴川,玉川学園前,*町田,*相模大野,小田急相模原,相武台前,*海老名,厚木,*本厚木',
+ '京王線':'*新宿,*笹塚,代田橋,*明大前,下高井戸,桜上水,上北沢,八幡山,芦花公園,*千歳烏山,仙川,つつじヶ丘,柴崎,国領,布田,*調布,西調布,飛田給,武蔵野台,多磨霊園,東府中,*府中,*分倍河原,中河原,*聖蹟桜ヶ丘,百草園,*高幡不動,南平,平山城址公園,長沼,*北野,*京王八王子',
+ '井の頭線':'*渋谷,神泉,駒場東大前,池ノ上,*下北沢,新代田,東松原,*明大前,*永福町,西永福,浜田山,高井戸,富士見ヶ丘,*久我山,三鷹台,井の頭公園,*吉祥寺',
+ '田園都市線':'*渋谷,池尻大橋,*三軒茶屋,駒沢大学,桜新町,用賀,*二子玉川,二子新地,高津,*溝の口,梶が谷,宮崎台,宮前平,*鷺沼,*たまプラーザ,*あざみ野,江田,市が尾,藤が丘,*青葉台,田奈,*長津田,つくし野,すずかけ台,*南町田グランベリーパーク,つきみ野,*中央林間',
+ '半蔵門線':'*渋谷,*表参道,青山一丁目,*永田町,半蔵門,*九段下,*神保町,*大手町,三越前,水天宮前,*清澄白河,住吉,*錦糸町,*押上',
+ '東急東横線':'*渋谷,代官山,*中目黒,祐天寺,学芸大学,都立大学,*自由が丘,田園調布,多摩川,新丸子,*武蔵小杉,元住吉,*日吉,綱島,大倉山,*菊名,妙蓮寺,白楽,東白楽,反町,*横浜',
+ '山手線':'*新宿,新大久保,*高田馬場,目白,*池袋,大塚,巣鴨,駒込,田端,西日暮里,*日暮里,鶯谷,*上野,御徒町,*秋葉原,神田,*東京,有楽町,*新橋,浜松町,田町,高輪ゲートウェイ,*品川,*大崎,五反田,*目黒,*恵比寿,*渋谷,*原宿,*代々木',
+ '中央・総武線':'*三鷹,*吉祥寺,西荻窪,*荻窪,阿佐ヶ谷,高円寺,*中野,東中野,大久保,*新宿,代々木,千駄ケ谷,信濃町,*四ツ谷,市ケ谷,*飯田橋,水道橋,*御茶ノ水,*秋葉原,浅草橋,両国,*錦糸町,亀戸,平井,*新小岩',
+ '丸の内線':'*荻窪,南阿佐ヶ谷,新高円寺,東高円寺,新中野,*中野坂上,西新宿,*新宿,*新宿三丁目,新宿御苑前,四谷三丁目,*四ツ谷,*赤坂見附,国会議事堂前,*霞ケ関,*銀座,*東京,*大手町,淡路町,*御茶ノ水,本郷三丁目,*後楽園,茗荷谷,新大塚,*池袋'
+};
+function parseLineStr(s){
+  return s.split(',').map(t=>{const e=t.startsWith('*'); return {n:e?t.slice(1):t, e};});
+}
+
+/* ---------------- storage layer ---------------- */
+const Store = {
+  mem:{},                    // key -> {value, updatedAt}
+  ls(k){ return CFG.LS_PREFIX+k; },
+  loadLocal(){
+    this.mem={};
+    for(let i=0;i<localStorage.length;i++){
+      const k=localStorage.key(i);
+      if(k.indexOf(CFG.LS_PREFIX)===0){
+        try{ this.mem[k.slice(CFG.LS_PREFIX.length)]=JSON.parse(localStorage.getItem(k)); }catch(e){}
+      }
+    }
+  },
+  setLocal(key,row){ this.mem[key]=row; try{ localStorage.setItem(this.ls(key), JSON.stringify(row)); }catch(e){} },
+  // merge incoming rows by updatedAt (do not clobber newer local)
+  merge(rows){
+    Object.keys(rows).forEach(key=>{
+      const inc=rows[key]; const cur=this.mem[key];
+      if(!cur || (inc && (inc.updatedAt||0) >= (cur.updatedAt||0))){
+        this.mem[key]=inc;
+        try{ localStorage.setItem(this.ls(key), JSON.stringify(inc)); }catch(e){}
+      }
+    });
+  },
+  async pull(){
+    if(!CFG.GAS_URL) return;
+    try{
+      const r=await fetch(CFG.GAS_URL,{method:'GET'});
+      const j=await r.json();
+      if(j && j.ok && j.data){
+        const rows={};
+        Object.keys(j.data).forEach(k=>{ try{ rows[k]=JSON.parse(j.data[k]); }catch(e){} });
+        this.merge(rows);
+      }
+    }catch(e){ console.warn('pull failed',e); }
+  },
+  async push(key,row){
+    this.setLocal(key,row);              // optimistic local
+    if(!CFG.GAS_URL) return true;
+    try{
+      await fetch(CFG.GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body:JSON.stringify({action:'set',key:key,value:JSON.stringify(row),updatedAt:row.updatedAt})});
+      return true;
+    }catch(e){ console.warn('push failed',e); return false; }
+  },
+  custKeys(){ return Object.keys(this.mem).filter(k=>k.indexOf('cust:')===0); },
+  lineKeys(){ return Object.keys(this.mem).filter(k=>k.indexOf('line:')===0); },
+  cust(id){ return this.mem['cust:'+id]; },
+  allCust(){ return this.custKeys().map(k=>this.mem[k]).filter(x=>x && !x._deleted); }
+};
+
+/* ---------------- lines (built-in + uploaded) ---------------- */
+function getLines(){
+  const out={};
+  Object.keys(BUILTIN_LINES).forEach(n=> out[n]=parseLineStr(BUILTIN_LINES[n]));
+  Store.lineKeys().forEach(k=>{
+    const row=Store.mem[k]; if(row && row.stations){ out[row.name]=row.stations; }
+  });
+  return out;
+}
+function lineOrder(){
+  // built-in first (fixed), then uploaded by creation
+  const built=Object.keys(BUILTIN_LINES);
+  const up=Store.lineKeys().map(k=>Store.mem[k]).filter(x=>x&&x.name&&built.indexOf(x.name)<0)
+            .sort((a,b)=>(a.createdAt||0)-(b.createdAt||0)).map(x=>x.name);
+  // also any line referenced by a customer but unknown -> appears at end
+  const known=new Set([...built,...up]);
+  const extra=[];
+  Store.allCust().forEach(c=> Object.keys(c.ranges||{}).forEach(ln=>{ if(!known.has(ln)){known.add(ln);extra.push(ln);} }));
+  return [...built,...up,...extra];
+}
+
+/* ---------------- state ---------------- */
+let UI = { view:'map', line:'小田急線', tanto:'全体', activeOnly:true, search:'', sort:'days' };
+
+/* ---------------- helpers ---------------- */
+function daysSince(iso){
+  if(!iso) return 0;
+  const d=new Date(iso+'T00:00:00'); const now=new Date();
+  return Math.max(0, Math.floor((now - d)/86400000));
+}
+function dcat(d){ if(d<=2)return'blue'; if(d<=4)return'green'; if(d<=6)return'yellow'; return'red'; }
+const DC={blue:'#0a84ff',green:'#30b06a',yellow:'#e0a400',red:'#ff3b30'};
+function statusJP(s){ return s==='contracted'?'契約済み':s==='lost'?'失注':'対応中'; }
+function esc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function toast(msg){ const c=document.getElementById('cloud'); c.textContent=msg; c.classList.add('on'); clearTimeout(c._t); c._t=setTimeout(()=>c.classList.remove('on'),1600); }
+
+function custVisibleBase(){ // status + tanto filters (line filter applied per view)
+  return Store.allCust().filter(c=>{
+    if(UI.activeOnly && (c.status==='contracted'||c.status==='lost')) return false;
+    if(UI.tanto!=='全体' && c.tanto!==UI.tanto) return false;
+    return true;
+  });
+}
+function lineCounts(line){
+  const all=Store.allCust().filter(c=> c.ranges && c.ranges[line] && !(UI.activeOnly && (c.status==='contracted'||c.status==='lost')));
+  const tot=all.length;
+  const stf= UI.tanto==='全体'?0: all.filter(c=>c.tanto===UI.tanto).length;
+  return {tot,stf};
+}
+
+/* ============== RENDER: sidebar ============== */
+function renderSide(){
+  const lines=lineOrder();
+  let h='';
+  h+=`<div class="logo">Ai-voyage</div><div class="title">顧客マップ</div>`;
+  h+=`<div class="lab">担当で絞り込み</div><div class="tantos">`;
+  h+=['全体',...TANTO].map(n=>`<span class="tchip ${UI.tanto===n?'on':''}" data-tanto="${n}">${n}</span>`).join('');
+  h+=`</div>`;
+  h+=`<div class="divider"></div>`;
+  const myLabel = UI.tanto==='全体' ? '担当顧客一覧' : `担当顧客一覧（${UI.tanto}）`;
+  h+=`<div class="navbtn ${UI.view==='my'?'on':''}" data-view="my">★ ${myLabel}</div>`;
+  h+=`<div class="lab">沿線</div><div class="lines">`;
+  lines.forEach(l=>{
+    const c=lineCounts(l);
+    const on = UI.view==='map' && UI.line===l;
+    h+=`<div class="lrow ${on?'on':''}" data-line="${esc(l)}"><span class="ln">${esc(l)}</span>
+        <span class="badge b-tot">${c.tot}</span>
+        ${c.stf>0?`<span class="badge b-staff">${c.stf}</span>`:''}</div>`;
+  });
+  h+=`</div>`;
+  h+=`<div class="navbtn uprow ${UI.view==='upload'?'on':''}" data-view="upload">⬆︎ 沿線アップロード</div>`;
+  h+=`<div style="padding:14px 8px 0"><span class="synctag">${CFG.GAS_URL?'全体共有：ON':'端末内保存（共有OFF）'}</span></div>`;
+  const side=document.getElementById('side'); side.innerHTML=h;
+  side.querySelectorAll('[data-tanto]').forEach(e=>e.onclick=()=>{UI.tanto=e.dataset.tanto; renderAll();});
+  side.querySelectorAll('[data-line]').forEach(e=>e.onclick=()=>{UI.view='map'; UI.line=e.dataset.line; renderAll();});
+  side.querySelectorAll('[data-view]').forEach(e=>e.onclick=()=>{UI.view=e.dataset.view; renderAll();});
+}
+
+/* ============== RENDER: head ============== */
+function renderHead(){
+  const mh=document.getElementById('mhead');
+  let h='';
+  if(UI.view==='map'){
+    const c=lineCounts(UI.line);
+    h=`<h1>${esc(UI.line)}</h1>
+       <span class="badge b-tot" style="height:22px;min-width:22px;font-size:12px">${c.tot}</span>
+       ${c.stf>0?`<span class="badge b-staff" style="height:22px;min-width:22px;font-size:12px">${c.stf}</span>`:''}
+       <span style="font-size:12px;color:var(--faint);font-weight:600">全体${UI.tanto!=='全体'?' / '+UI.tanto:''}</span>
+       <span class="sp"></span>
+       <span class="tg ${UI.activeOnly?'on':''}" id="tgActive">対応中のみ</span>
+       <button class="addbtn" id="addBtn">＋ 顧客</button>`;
+  }else if(UI.view==='my'){
+    const list=myList();
+    h=`<h1>${UI.tanto==='全体'?'担当顧客一覧':'担当顧客一覧（'+UI.tanto+'）'}</h1>
+       <span class="badge b-staff" style="height:22px;min-width:22px;font-size:12px">${list.length}</span>
+       <span style="font-size:12px;color:var(--faint);font-weight:600">${UI.tanto==='全体'?'全体':UI.tanto}・${UI.activeOnly?'対応中':'すべて'}</span>
+       <span class="sp"></span>
+       <span class="tg ${UI.activeOnly?'on':''}" id="tgActive">対応中のみ</span>
+       <button class="addbtn" id="addBtn">＋ 顧客</button>`;
+  }else{
+    h=`<h1>沿線アップロード</h1><span style="font-size:12px;color:var(--faint);font-weight:600">新しい沿線を追加</span>`;
+  }
+  mh.innerHTML=h;
+  const tg=document.getElementById('tgActive'); if(tg) tg.onclick=()=>{UI.activeOnly=!UI.activeOnly; renderAll();};
+  const ab=document.getElementById('addBtn'); if(ab) ab.onclick=()=>openEdit(null);
+}
+
+/* ============== map geometry ============== */
+function lineStations(line){ const L=getLines(); return L[line]||[]; }
+function expressIdx(line){ return lineStations(line).map((s,i)=>s.e?i:-1).filter(i=>i>=0); }
+function renderMap(){
+  const scroll=document.getElementById('scroll');
+  const sts=lineStations(UI.line);
+  if(!sts.length){ scroll.innerHTML=`<div class="empty">この沿線の駅データがありません。「沿線アップロード」から登録してください。</div>`; return; }
+  const custs=custVisibleBase().filter(c=>c.ranges && c.ranges[UI.line]);
+  // figure furthest full index needed
+  let maxFull=4;
+  custs.forEach(c=>{ const r=c.ranges[UI.line]; (endpoints(r,sts)).forEach(i=>{ if(i>maxFull) maxFull=i; }); });
+  const exIdx=expressIdx(sts.length?UI.line:UI.line);
+  // express columns up to needed
+  let lastExpressNeeded = exIdx.findIndex(ei=>ei>=maxFull);
+  if(lastExpressNeeded<0) lastExpressNeeded = exIdx.length-1;
+  lastExpressNeeded = Math.max(lastExpressNeeded, 4); // minimum window
+  lastExpressNeeded = Math.min(lastExpressNeeded, exIdx.length-1);
+  const cols = exIdx.slice(0,lastExpressNeeded+1);  // express full-indexes to display
+  const COLW=128, LEFT=92, TOP=34, ROWH=88;
+  const colX = i => LEFT + i*COLW + COLW/2;
+  // x by full index (interpolate between express columns)
+  function xFull(fi){
+    if(fi<=cols[0]) return colX(0);
+    for(let j=0;j<cols.length-1;j++){
+      if(fi>=cols[j] && fi<=cols[j+1]){
+        const t=(fi-cols[j])/(cols[j+1]-cols[j]||1);
+        return colX(j)+(colX(j+1)-colX(j))*t;
+      }
+    }
+    return colX(cols.length-1);
+  }
+  const W=LEFT+COLW*cols.length, H=TOP+ROWH*BANDS.length;
+  let h=`<div class="plot" style="width:${W}px;height:${H+20}px;position:relative">`;
+  // express headers + vlines; faint ticks for non-express within range
+  cols.forEach((fi,j)=>{
+    const x=colX(j);
+    h+=`<div class="sthdr" style="left:${x}px">${esc(sts[fi].n)}</div>`;
+    h+=`<div class="vline" style="left:${x}px;top:${TOP-4}px;height:${ROWH*BANDS.length}px"></div>`;
+  });
+  // band rows
+  BANDS.forEach((b,bi)=>{
+    const y=TOP+ROWH*bi;
+    h+=`<div class="hline" style="top:${y}px;width:${W}px"></div>`;
+    h+=`<div class="bandlbl" style="left:0;top:${y+6}px;width:${LEFT-12}px">${b.label}</div>`;
+  });
+  // bars
+  const lane={};
+  if(!custs.length){
+    h+=`<div class="empty" style="position:absolute;left:${LEFT}px;top:${TOP+24}px">この沿線・条件に該当する顧客はいません。</div>`;
+  }
+  custs.forEach(c=>{
+    const r=c.ranges[UI.line]; const eps=endpoints(r,sts);
+    if(!eps.length) return;
+    const a=Math.min(...eps), b=Math.max(...eps);
+    const x1=xFull(a), x2=xFull(b);
+    const bi=bandIndexFromRent(c.rentMax);
+    const d=daysSince(c.monodashi), cat=dcat(d), col=DC[cat];
+    const w=Math.max(x2-x1,158);
+    const ln=lane[bi]||0; lane[bi]=ln+1;
+    const y=TOP+ROWH*bi+9+ln*36;
+    const filled = (cat==='yellow'||cat==='red');
+    const bg = filled?col:'rgba(255,255,255,.95)';
+    const nmc = filled?'#fff':'var(--ink)';
+    const metac = filled?'rgba(255,255,255,.88)':'var(--faint)';
+    const pribg = filled?'rgba(255,255,255,.25)':PCOL[c.pri];
+    h+=`<div class="ep" style="left:${x1}px;top:${y+15}px;background:${col}"></div>`;
+    h+=`<div class="ep" style="left:${x1+w}px;top:${y+15}px;background:${col}"></div>`;
+    h+=`<div class="bar" data-id="${c.id}" style="left:${x1}px;top:${y}px;width:${w}px;background:${bg};border:.5px solid rgba(0,0,0,.08);${filled?'':`border-left:4px solid ${col};`}box-shadow:0 2px 8px rgba(0,0,0,${filled?'.18':'.06'})">
+      <span class="pri" style="background:${pribg};color:#fff">${c.pri}</span>
+      <span class="nm" style="color:${nmc}">${esc(c.name)}</span>
+      <span class="tnt" style="background:${filled?'rgba(255,255,255,.25)':'#eef2f8'};color:${filled?'#fff':'var(--navy)'}">${esc(c.tanto||'')}</span>
+      <span class="meta" style="color:${metac}">上限${esc(rentShort(c.rentMax))}・${esc(rangeLabel(r,sts))}・${esc(c.madori||'')}・入居${esc(c.fastest||'')}〜${esc(c.limit||'')}</span>
+      <span class="d" style="color:${nmc}">${d}日</span></div>`;
+  });
+  h+='</div>';
+  h+=legendHTML();
+  scroll.innerHTML=h;
+  scroll.querySelectorAll('.bar').forEach(b=>b.onclick=()=>openDetail(b.dataset.id));
+}
+function rentShort(r){ const n=String(r||'').replace(/[^0-9]/g,''); if(!n) return r||'—'; let v=parseInt(n,10); if(v>=10000) v=Math.round(v/10000); return v+'万'; }
+function endpoints(r,sts){
+  // returns array of full indexes for this line range
+  const idx = name=> sts.findIndex(s=>s.n===name);
+  if(!r) return [];
+  if(r.mode==='stations' && r.stations && r.stations.length){ return r.stations.map(idx).filter(i=>i>=0); }
+  if(r.mode==='radius'){ return [0]; } // 住所基点は左端に置く（簡易）
+  const f=idx(r.from), t=idx(r.to);
+  return [f,t].filter(i=>i>=0);
+}
+function rangeLabel(r,sts){
+  if(!r) return '';
+  if(r.mode==='stations' && r.stations) return r.stations.join('・');
+  if(r.mode==='radius') return (r.addr||'住所')+' '+(r.km||'')+'km圏';
+  return (r.from||'')+'〜'+(r.to||'');
+}
+function legendHTML(){
+  return `<div class="legend"><span>物出し経過：</span>
+   <span><span class="sw" style="background:#0a84ff"></span>1–2日</span>
+   <span><span class="sw" style="background:#30b06a"></span>3–4日</span>
+   <span><span class="sw" style="background:#e0a400"></span>5–6日(塗)</span>
+   <span><span class="sw" style="background:#ff3b30"></span>7日〜(塗)</span>
+   <span style="color:var(--faint)">／ 左四角＝優先度（A赤/B黄/C灰）・名前クリックで詳細</span></div>`;
+}
+
+/* ============== my list ============== */
+function myList(){
+  let list=custVisibleBase();
+  if(UI.search){ const q=UI.search.trim(); list=list.filter(c=>(c.name||'').indexOf(q)>=0); }
+  list.sort((a,b)=> UI.sort==='days' ? daysSince(b.monodashi)-daysSince(a.monodashi) : (a.name||'').localeCompare(b.name||'','ja'));
+  return list;
+}
+function primaryLine(c){ const ks=Object.keys(c.ranges||{}); return ks.length?ks[0]:''; }
+function renderMy(){
+  const scroll=document.getElementById('scroll');
+  let h=`<div class="searchrow">
+    <div class="searchbox"><span style="color:var(--faint)">⌕</span><input id="mySearch" placeholder="お客様名で検索…" value="${esc(UI.search)}"></div>
+    <button class="sortbtn" id="mySort">${UI.sort==='days'?'物出し古い順 ⇅':'名前順 ⇅'}</button>
+  </div>`;
+  const list=myList();
+  if(!list.length){ h+=`<div class="empty">該当する顧客がいません。「＋ 顧客」から追加できます。</div>`; }
+  const L=getLines();
+  list.forEach(c=>{
+    const ln=primaryLine(c); const r=c.ranges&&c.ranges[ln];
+    const sts=L[ln]||[];
+    const d=daysSince(c.monodashi), cat=dcat(d), col=DC[cat], filled=(cat==='yellow'||cat==='red');
+    const chip = filled?`<span class="dchip" style="background:${col};color:#fff">物出し ${d}日</span>`
+                       :`<span class="dchip" style="background:${col}1f;color:${col}">物出し ${d}日</span>`;
+    const moreLines = Object.keys(c.ranges||{}).length>1?`<span class="small">＋${Object.keys(c.ranges).length-1}沿線</span>`:'';
+    h+=`<div class="lrowcard" data-id="${c.id}">
+      <span class="pri" style="background:${PCOL[c.pri]}">${c.pri}</span>
+      <span class="nm">${esc(c.name)}</span>
+      <span class="tnt">${esc(c.tanto||'')}</span>
+      ${ln?`<span class="lntag">${esc(ln)} ${esc(rangeLabel(r,sts))}</span>`:''}
+      ${moreLines}
+      <span class="mt">上限${esc(rentShort(c.rentMax))}</span>
+      <span class="mt">${esc(c.madori||'')}</span>
+      <span class="mt">入居 ${esc(c.fastest||'')}〜${esc(c.limit||'')}</span>
+      <span style="margin-left:auto"></span>${chip}<span class="chev">›</span></div>`;
+  });
+  scroll.innerHTML=h;
+  const s=document.getElementById('mySearch'); if(s){ s.oninput=()=>{UI.search=s.value; const list=myList(); renderMyRowsOnly(); }; s.onkeydown=e=>e.stopPropagation(); }
+  const so=document.getElementById('mySort'); if(so) so.onclick=()=>{UI.sort=UI.sort==='days'?'name':'days'; renderMy(); };
+  scroll.querySelectorAll('.lrowcard').forEach(e=>e.onclick=()=>openDetail(e.dataset.id));
+}
+function renderMyRowsOnly(){ renderMy(); const s=document.getElementById('mySearch'); if(s){ s.focus(); s.setSelectionRange(s.value.length,s.value.length);} }
+
+/* ============== detail drawer ============== */
+function openDetail(id){
+  const c=Store.cust(id); if(!c) return;
+  const d=daysSince(c.monodashi), col=DC[dcat(d)];
+  const L=getLines();
+  let lines='';
+  Object.keys(c.ranges||{}).forEach(ln=>{
+    const sts=L[ln]||[]; const r=c.ranges[ln]; const eps=endpoints(r,sts);
+    let seg='';
+    if(eps.length && sts.length){
+      const n=sts.length, a=Math.min(...eps), b=Math.max(...eps);
+      const leftP=(a/(n-1))*100, widP=Math.max(((b-a)/(n-1))*100,10);
+      seg=`<div class="seg" style="left:${leftP}%;width:${widP}%;background:${col};position:absolute;top:0;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10.5px;font-weight:800;white-space:nowrap;padding:0 6px">${esc(rangeLabel(r,sts))}</div>`;
+    }else{
+      seg=`<div style="position:absolute;left:6px;top:3px;font-size:11px;color:var(--ink2);font-weight:700">${esc(rangeLabel(r,sts))}</div>`;
+    }
+    lines+=`<div class="linerow"><span class="ln">${esc(ln)}</span><div class="minibar">${seg}</div></div>`;
+  });
+  const must=(c.must&&c.must.length)?c.must.map(e=>`<span class="eq must">${esc(e)}</span>`).join(''):'<span class="small">—</span>';
+  const want=(c.want&&c.want.length)?c.want.map(e=>`<span class="eq want">${esc(e)}</span>`).join(''):'<span class="small">—</span>';
+  const pdfs=(c.pdfs&&c.pdfs.length)?c.pdfs.map(p=>`<div class="pdf"><span class="ic">PDF</span><div><a href="${esc(p.url||'#')}" target="_blank" rel="noopener">${esc(p.name||'物件PDF')}</a><div class="pm">${esc(p.memo||'（メモなし）')}</div></div></div>`).join(''):'<div class="small">まだありません</div>';
+  const stCol={'対応中':'#2f6fd6','契約済み':'#2e9e6b','失注':'#9aa0a6'}[statusJP(c.status)];
+  document.getElementById('drawer').innerHTML=`
+    <div class="dh"><span class="x" onclick="closeDetail()">✕</span>
+      <div class="nm"><span style="display:inline-block;background:${PCOL[c.pri]};color:#fff;font-size:13px;font-weight:900;border-radius:6px;padding:0 8px;margin-right:8px;vertical-align:3px">${c.pri}</span>${esc(c.name)}</div>
+      <div class="tags">
+        <span class="tagp" style="background:${stCol}22;color:${stCol}">${statusJP(c.status)}</span>
+        <span class="tagp" style="background:#eef2f8;color:var(--navy)">担当 ${esc(c.tanto||'')}</span>
+        <span class="tagp" style="background:${col}22;color:${col}">● 物出し ${d}日前</span>
+      </div></div>
+    <div class="db">
+      <div class="sec"><h3>基本</h3>
+        <div class="kv"><span class="k">賃料上限</span><span class="v">${esc(rentShort(c.rentMax))}</span></div>
+        <div class="kv"><span class="k">間取り</span><span class="v">${esc(c.madori||'—')}</span></div>
+        <div class="kv"><span class="k">入居</span><span class="v">${esc(c.fastest||'—')} 〜 ${esc(c.limit||'—')}（最速〜リミット）</span></div>
+        <div class="kv"><span class="k">最新物出し</span><span class="v">${esc(c.monodashi||'—')}（${d}日前）</span></div>
+      </div>
+      <div class="sec"><h3>希望沿線・駅区間（${Object.keys(c.ranges||{}).length}沿線）</h3>${lines||'<span class="small">—</span>'}</div>
+      <div class="sec"><h3>設備：必須</h3><div class="equip">${must}</div></div>
+      <div class="sec"><h3>設備：希望</h3><div class="equip">${want}</div></div>
+      <div class="sec"><h3>提案・興味物件（PDFリンク＋メモ）</h3>${pdfs}</div>
+      <div class="sec"><h3>こだわりメモ</h3><div class="note">${esc(c.note||'—')}</div></div>
+      <div class="btnrow"><button class="btn primary full" onclick="openEdit('${c.id}')">✎ 編集</button></div>
+    </div>`;
+  document.getElementById('drawer').classList.add('on');
+  document.getElementById('scrim').classList.add('on');
+}
+function closeDetail(){ document.getElementById('drawer').classList.remove('on'); document.getElementById('scrim').classList.remove('on'); }
+
+/* ============== edit / create modal ============== */
+let EDIT=null;
+function blankCust(){
+  return {id:'c'+Date.now()+Math.floor(Math.random()*1000), name:'', tanto:UI.tanto==='全体'?TANTO[0]:UI.tanto,
+    pri:'B', rentMax:'', madori:'', fastest:'', limit:'', monodashi:new Date().toISOString().slice(0,10),
+    status:'active', ranges:{}, must:[], want:[], pdfs:[], note:'' };
+}
+function openEdit(id){
+  EDIT = id ? JSON.parse(JSON.stringify(Store.cust(id))) : blankCust();
+  if(!EDIT.ranges) EDIT.ranges={};
+  if(id===null && UI.view==='map'){ if(!EDIT.ranges[UI.line]) EDIT.ranges[UI.line]={mode:'range',from:'',to:''}; }
+  renderEdit();
+  document.getElementById('modal').classList.add('on');
+}
+function closeModal(){ document.getElementById('modal').classList.remove('on'); }
+function renderEdit(){
+  const c=EDIT; const lines=lineOrder();
+  const lineBlocks=Object.keys(c.ranges).map(ln=>lineBlockHTML(ln,c.ranges[ln],lines)).join('');
+  const mustSet=new Set(c.must||[]), wantSet=new Set(c.want||[]);
+  const pool=EQUIP.filter(e=>!mustSet.has(e)&&!wantSet.has(e));
+  const eqItem=(e,where)=>`<div class="eqitem" draggable="true" data-eq="${esc(e)}" data-where="${where}">${esc(e)}</div>`;
+  const pdfRows=(c.pdfs||[]).map((p,i)=>`
+     <div class="grid3" style="gap:8px;margin-bottom:8px">
+       <input class="in" data-pdf="name" data-i="${i}" placeholder="物件名" value="${esc(p.name||'')}">
+       <input class="in" data-pdf="url" data-i="${i}" placeholder="Driveリンク(URL)" value="${esc(p.url||'')}">
+       <div style="display:flex;gap:6px"><input class="in" data-pdf="memo" data-i="${i}" placeholder="メモ" value="${esc(p.memo||'')}"><span class="addline" data-delpdf="${i}" style="white-space:nowrap;align-self:center">削除</span></div>
+     </div>`).join('');
+  document.getElementById('modal').innerHTML=`
+   <div class="sheet">
+    <div class="mh"><h2>${Store.cust(c.id)?'顧客を編集':'顧客を追加'}</h2><span class="x" onclick="closeModal()">✕</span></div>
+    <div class="mb">
+      <div class="grid2">
+        <div class="fg"><label>お客様名</label><input class="in" id="f_name" value="${esc(c.name)}" placeholder="山田 太郎"></div>
+        <div class="fg"><label>担当</label><div class="seg" id="f_tanto">${TANTO.map(t=>`<span class="segb ${c.tanto===t?'on':''}" data-t="${t}">${t}</span>`).join('')}</div></div>
+      </div>
+      <div class="grid3">
+        <div class="fg"><label>優先度</label><div class="seg" id="f_pri">${['A','B','C'].map(p=>`<span class="segb ${c.pri===p?'on':''}" data-p="${p}">${p}</span>`).join('')}</div></div>
+        <div class="fg"><label>賃料上限</label><input class="in" id="f_rent" value="${esc(c.rentMax)}" placeholder="例) 9万 / 90000"></div>
+        <div class="fg"><label>ステータス</label><div class="seg" id="f_status">${[['active','対応中'],['contracted','契約済み'],['lost','失注']].map(s=>`<span class="segb ${c.status===s[0]?'on':''}" data-s="${s[0]}">${s[1]}</span>`).join('')}</div></div>
+      </div>
+      <div class="grid3">
+        <div class="fg"><label>間取り</label><input class="in" id="f_madori" value="${esc(c.madori)}" placeholder="1K / 1LDK"></div>
+        <div class="fg"><label>最速入居日</label><input class="in" id="f_fastest" value="${esc(c.fastest)}" placeholder="即日 / 3/1"></div>
+        <div class="fg"><label>入居リミット</label><input class="in" id="f_limit" value="${esc(c.limit)}" placeholder="3/末"></div>
+      </div>
+      <div class="fg"><label>最新の物出し日</label><input class="in" type="date" id="f_mono" value="${esc(c.monodashi)}" style="max-width:200px"></div>
+
+      <div class="fg"><label>希望沿線・駅区間</label>
+        <div id="f_lines">${lineBlocks||'<div class="small">沿線を追加してください</div>'}</div>
+        <div style="margin-top:6px"><span class="addline" id="addLineBtn">＋ 沿線を追加</span></div>
+      </div>
+
+      <div class="fg"><label>設備（ドラッグで「必須／希望」に振り分け）</label>
+        <div class="eqwrap" id="eqwrap">
+          <div class="eqcol" data-zone="pool"><h4>候補</h4><div class="eqlist">${pool.map(e=>eqItem(e,'pool')).join('')}</div></div>
+          <div class="eqcol must" data-zone="must"><h4>必須</h4><div class="eqlist">${(c.must||[]).map(e=>eqItem(e,'must')).join('')}</div></div>
+          <div class="eqcol want" data-zone="want"><h4>希望</h4><div class="eqlist">${(c.want||[]).map(e=>eqItem(e,'want')).join('')}</div></div>
+        </div>
+      </div>
+
+      <div class="fg"><label>提案・興味物件（PDFはGoogle Driveのリンク＋メモ）</label>
+        <div id="f_pdfs">${pdfRows}</div>
+        <span class="addline" id="addPdfBtn">＋ PDFリンクを追加</span>
+      </div>
+
+      <div class="fg"><label>こだわりメモ</label><textarea class="in" id="f_note" placeholder="洋室6畳以上・在宅で静かな環境・服が多い等">${esc(c.note)}</textarea></div>
+    </div>
+    <div class="mf">
+      ${Store.cust(c.id)?'<button class="btn danger" id="delBtn">削除</button>':''}
+      <button class="btn ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn primary" id="saveBtn">保存</button>
+    </div>
+   </div>`;
+  bindEdit();
+}
+function lineBlockHTML(ln,r,lines){
+  const opts=lines.map(l=>`<option ${l===ln?'selected':''}>${esc(l)}</option>`).join('');
+  const mode=r.mode||'range';
+  const seg=`<div class="seg" data-line="${esc(ln)}" data-role="mode">
+     ${[['range','駅〜駅'],['stations','駅を指定'],['radius','住所＋km圏']].map(m=>`<span class="segb ${mode===m[0]?'on':''}" data-m="${m[0]}">${m[1]}</span>`).join('')}</div>`;
+  let body='';
+  if(mode==='range'){
+    body=`<div class="grid2"><input class="in" data-line="${esc(ln)}" data-f="from" placeholder="◯◯駅（都心側）" value="${esc(r.from||'')}"><input class="in" data-line="${esc(ln)}" data-f="to" placeholder="◯◯駅（郊外側）" value="${esc(r.to||'')}"></div>`;
+  }else if(mode==='stations'){
+    body=`<input class="in" data-line="${esc(ln)}" data-f="stations" placeholder="駅をカンマ区切り（例：下北沢,経堂,成城学園前）" value="${esc((r.stations||[]).join(','))}">`;
+  }else{
+    body=`<div class="grid2"><input class="in" data-line="${esc(ln)}" data-f="addr" placeholder="基点の住所/駅" value="${esc(r.addr||'')}"><input class="in" data-line="${esc(ln)}" data-f="km" placeholder="半径km（例：3）" value="${esc(r.km||'')}"></div>`;
+  }
+  return `<div class="lineblock"><div class="lh">
+     <select class="in" style="width:auto" data-line="${esc(ln)}" data-role="linename">${opts}</select>
+     ${seg}<span class="x" data-delline="${esc(ln)}">✕</span></div>${body}</div>`;
+}
+function bindEdit(){
+  const m=document.getElementById('modal');
+  m.querySelectorAll('#f_tanto .segb').forEach(b=>b.onclick=()=>{EDIT.tanto=b.dataset.t; toggleSeg(b);});
+  m.querySelectorAll('#f_pri .segb').forEach(b=>b.onclick=()=>{EDIT.pri=b.dataset.p; toggleSeg(b);});
+  m.querySelectorAll('#f_status .segb').forEach(b=>b.onclick=()=>{EDIT.status=b.dataset.s; toggleSeg(b);});
+  m.querySelector('#addLineBtn').onclick=()=>{ const lines=lineOrder(); const avail=lines.find(l=>!EDIT.ranges[l])||lines[0]; EDIT.ranges[avail]={mode:'range',from:'',to:''}; collectEdit(); renderEdit(); };
+  m.querySelectorAll('[data-delline]').forEach(x=>x.onclick=()=>{ collectEdit(); delete EDIT.ranges[x.dataset.delline]; renderEdit(); });
+  m.querySelectorAll('[data-role="mode"] .segb').forEach(b=>b.onclick=()=>{ collectEdit(); const ln=b.parentElement.dataset.line; EDIT.ranges[ln]=EDIT.ranges[ln]||{}; EDIT.ranges[ln].mode=b.dataset.m; renderEdit(); });
+  m.querySelectorAll('[data-role="linename"]').forEach(sel=>sel.onchange=()=>{ collectEdit(); const oldn=sel.dataset.line, val=sel.value; if(oldn!==val){ EDIT.ranges[val]=EDIT.ranges[oldn]; delete EDIT.ranges[oldn]; } renderEdit(); });
+  m.querySelector('#addPdfBtn').onclick=()=>{ collectEdit(); EDIT.pdfs.push({name:'',url:'',memo:''}); renderEdit(); };
+  m.querySelectorAll('[data-delpdf]').forEach(x=>x.onclick=()=>{ collectEdit(); EDIT.pdfs.splice(+x.dataset.delpdf,1); renderEdit(); });
+  m.querySelector('#saveBtn').onclick=saveEdit;
+  const del=m.querySelector('#delBtn'); if(del) del.onclick=()=>{ if(confirm('この顧客を削除しますか？')) deleteCust(EDIT.id); };
+  // prevent global keynav while typing
+  m.querySelectorAll('input,textarea,select').forEach(e=>e.addEventListener('keydown',ev=>ev.stopPropagation()));
+  bindEquipDrag();
+}
+function toggleSeg(b){ [...b.parentElement.children].forEach(s=>s.classList.remove('on')); b.classList.add('on'); }
+function bindEquipDrag(){
+  const m=document.getElementById('modal');
+  let dragEl=null;
+  m.querySelectorAll('.eqitem').forEach(it=>{
+    it.ondragstart=e=>{ dragEl=it; it.classList.add('drag'); e.dataTransfer.setData('text/plain',it.dataset.eq); };
+    it.ondragend=()=>{ if(dragEl)dragEl.classList.remove('drag'); dragEl=null; };
+  });
+  m.querySelectorAll('.eqcol').forEach(col=>{
+    col.ondragover=e=>e.preventDefault();
+    col.ondrop=e=>{ e.preventDefault(); if(!dragEl)return; const eq=dragEl.dataset.eq; const zone=col.dataset.zone;
+      EDIT.must=(EDIT.must||[]).filter(x=>x!==eq); EDIT.want=(EDIT.want||[]).filter(x=>x!==eq);
+      if(zone==='must') EDIT.must.push(eq); else if(zone==='want') EDIT.want.push(eq);
+      renderEdit(); };
+  });
+}
+function collectEdit(){
+  const m=document.getElementById('modal'); if(!m.querySelector('#f_name')) return;
+  EDIT.name=val('#f_name'); EDIT.rentMax=val('#f_rent'); EDIT.madori=val('#f_madori');
+  EDIT.fastest=val('#f_fastest'); EDIT.limit=val('#f_limit'); EDIT.monodashi=val('#f_mono'); EDIT.note=val('#f_note');
+  // line ranges
+  m.querySelectorAll('.lineblock').forEach(bl=>{
+    const sel=bl.querySelector('[data-role="linename"]'); const ln=sel.value;
+    const r=EDIT.ranges[ln]||EDIT.ranges[sel.dataset.line]||{}; const mode=r.mode||'range';
+    bl.querySelectorAll('[data-f]').forEach(inp=>{
+      const f=inp.dataset.f;
+      if(f==='stations') r.stations=inp.value.split(',').map(s=>s.trim()).filter(Boolean);
+      else r[f]=inp.value;
+    });
+    r.mode=mode; EDIT.ranges[ln]=r;
+  });
+  // pdfs
+  m.querySelectorAll('[data-pdf]').forEach(inp=>{ const i=+inp.dataset.i; EDIT.pdfs[i]=EDIT.pdfs[i]||{}; EDIT.pdfs[i][inp.dataset.pdf]=inp.value; });
+}
+function val(s){ const e=document.querySelector(s); return e?e.value:''; }
+async function saveEdit(){
+  collectEdit();
+  if(!EDIT.name.trim()){ alert('お客様名を入力してください'); return; }
+  EDIT.updatedAt=Date.now();
+  await Store.push('cust:'+EDIT.id, EDIT);
+  closeModal(); renderAll(); toast('保存しました');
+}
+async function deleteCust(id){
+  const row=Store.cust(id); if(!row) return;
+  row._deleted=true; row.updatedAt=Date.now();
+  await Store.push('cust:'+id,row);
+  closeModal(); closeDetail(); renderAll(); toast('削除しました');
+}
+
+/* ============== 沿線アップロード ============== */
+function renderUpload(){
+  const scroll=document.getElementById('scroll');
+  const existing=lineOrder();
+  scroll.innerHTML=`
+   <div style="max-width:720px">
+    <div class="upinfo">新しい沿線を追加します。駅名を<b>都心側→郊外側の順</b>に貼り付け（カンマ／改行区切り）、各駅の「急行停車」をチェックしてください（チェックした駅だけが横軸ラベルに表示され、見やすくなります）。位置計算には全駅順を使います。</div>
+    <div class="fg"><label>沿線名</label><input class="in" id="up_name" placeholder="例）東急目黒線" style="max-width:320px"></div>
+    <div class="fg"><label>駅名（都心側から・カンマ／改行区切り）</label><textarea class="in" id="up_sts" placeholder="目黒,不動前,武蔵小山,西小山,洗足,大岡山,奥沢,田園調布,多摩川"></textarea></div>
+    <div style="margin:6px 0 12px"><button class="btn ghost" id="up_parse">駅を読み込む</button></div>
+    <div id="up_chk"></div>
+    <div class="mf" style="border:none;padding:14px 0"><button class="btn primary" id="up_save" style="display:none">この沿線を保存</button></div>
+    <div style="margin-top:8px"><div class="lab" style="padding-left:0">登録済みの沿線</div>
+      ${existing.map(l=>`<span class="tagp" style="background:#eef2f8;color:var(--navy);margin:0 6px 6px 0;display:inline-block">${esc(l)}${BUILTIN_LINES[l]?'（内蔵）':''}</span>`).join('')}
+    </div>
+   </div>`;
+  document.getElementById('up_name').addEventListener('keydown',e=>e.stopPropagation());
+  document.getElementById('up_sts').addEventListener('keydown',e=>e.stopPropagation());
+  document.getElementById('up_parse').onclick=()=>{
+    const raw=document.getElementById('up_sts').value.split(/[,\n、，]/).map(s=>s.trim()).filter(Boolean);
+    if(!raw.length){ alert('駅名を入力してください'); return; }
+    const chk=document.getElementById('up_chk');
+    chk.innerHTML=`<div class="lab" style="padding-left:0">急行停車駅をチェック</div><div class="stationchk">`+
+      raw.map((n,i)=>`<label class="scbox"><input type="checkbox" data-i="${i}" ${(i===0||i===raw.length-1)?'checked':''}> ${esc(n)}</label>`).join('')+`</div>`;
+    chk._stations=raw;
+    document.getElementById('up_save').style.display='inline-flex';
+  };
+  document.getElementById('up_save').onclick=async()=>{
+    const name=document.getElementById('up_name').value.trim();
+    const chk=document.getElementById('up_chk'); const raw=chk._stations||[];
+    if(!name){ alert('沿線名を入力してください'); return; }
+    if(!raw.length){ alert('駅を読み込んでください'); return; }
+    const exSet=new Set([...chk.querySelectorAll('input[type=checkbox]')].filter(c=>c.checked).map(c=>+c.dataset.i));
+    const stations=raw.map((n,i)=>({n, e:exSet.has(i)}));
+    const row={name, stations, createdAt:Date.now(), updatedAt:Date.now()};
+    await Store.push('line:'+name, row);
+    UI.view='map'; UI.line=name; renderAll(); toast('沿線を追加しました');
+  };
+}
+
+/* ============== render dispatch ============== */
+function renderAll(){
+  renderSide(); renderHead();
+  if(UI.view==='map') renderMap();
+  else if(UI.view==='my') renderMy();
+  else renderUpload();
+}
+document.getElementById('scrim').onclick=()=>{closeDetail();};
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeDetail(); closeModal(); }});
+
+/* ============== seed sample data (first run, local only) ============== */
+function seedIfEmpty(){
+  if(CFG.GAS_URL) return;            // 全体共有ON時はサンプルを出さない
+  if(Store.allCust().length) return;
+  if(localStorage.getItem(CFG.LS_PREFIX+'_seeded')) return;
+  const today=new Date(); const iso=n=>{const d=new Date(today);d.setDate(d.getDate()-n);return d.toISOString().slice(0,10);};
+  const S=[
+   {name:'渡辺 健',tanto:'生沼',pri:'A',rentMax:'15万',madori:'2LDK',fastest:'即日',limit:'3/末',monodashi:iso(8),status:'active',ranges:{'小田急線':{mode:'range',from:'新宿',to:'町田'}},must:['バストイレ別','オートロック'],want:['南向き'],pdfs:[{name:'成城シャトー201',url:'#',memo:'本命・日当たり◎'}],note:'転勤。小田急1本必須。'},
+   {name:'鈴木 一郎',tanto:'弘中',pri:'A',rentMax:'11万',madori:'1DK',fastest:'2/1',limit:'3/10',monodashi:iso(6),status:'active',ranges:{'小田急線':{mode:'range',from:'参宮橋',to:'下北沢'},'京王線':{mode:'range',from:'新宿',to:'桜上水'}},must:['独立洗面台','2口コンロ以上'],want:['角部屋','クローゼット大きめ'],pdfs:[{name:'桜上水ハイツ',url:'#',memo:'第一候補'}],note:'在宅多め・服が多い。'},
+   {name:'山田 太郎',tanto:'弘中',pri:'A',rentMax:'9万',madori:'1K',fastest:'即日',limit:'3/5',monodashi:iso(1),status:'active',ranges:{'小田急線':{mode:'range',from:'参宮橋',to:'千歳船橋'}},must:['バストイレ別'],want:['独立洗面台'],pdfs:[],note:'初一人暮らし・予算厳しめ。'},
+   {name:'佐藤 花子',tanto:'横山',pri:'B',rentMax:'13万',madori:'1LDK',fastest:'2/1',limit:'2/28',monodashi:iso(4),status:'active',ranges:{'小田急線':{mode:'range',from:'下北沢',to:'成城学園前'}},must:['ペット可'],want:['2階以上'],pdfs:[],note:'猫1匹。'},
+   {name:'田中 桜',tanto:'横山',pri:'B',rentMax:'9万',madori:'1K',fastest:'即日',limit:'3/末',monodashi:iso(2),status:'active',ranges:{'小田急線':{mode:'range',from:'経堂',to:'登戸'},'東急東横線':{mode:'range',from:'中目黒',to:'自由が丘'}},must:['オートロック'],want:['2階以上'],pdfs:[],note:'セキュリティ重視。'},
+   {name:'伊藤 葵',tanto:'弘中',pri:'B',rentMax:'13万',madori:'1LDK',fastest:'2/1',limit:'2/28',monodashi:iso(9),status:'active',ranges:{'小田急線':{mode:'range',from:'成城学園前',to:'町田'}},must:['駐車場'],want:['角部屋'],pdfs:[],note:'車所有。'},
+   {name:'高橋 実',tanto:'宮本',pri:'C',rentMax:'10万',madori:'1R',fastest:'4/1',limit:'4/末',monodashi:iso(5),status:'active',ranges:{'田園都市線':{mode:'range',from:'三軒茶屋',to:'二子玉川'}},must:[],want:['バイク置き場'],pdfs:[],note:'バイク通勤。'},
+   {name:'中村 大',tanto:'田邊',pri:'C',rentMax:'10万',madori:'1K',fastest:'3/1',limit:'4/1',monodashi:iso(3),status:'active',ranges:{'小田急線':{mode:'range',from:'代々木上原',to:'成城学園前'}},must:[],want:['都市ガス'],pdfs:[],note:'急ぎでない。'}
+  ];
+  S.forEach((s,i)=>{ s.id='seed'+i; s.updatedAt=Date.now(); Store.setLocal('cust:'+s.id, s); });
+  localStorage.setItem(CFG.LS_PREFIX+'_seeded','1');
+}
+
+/* ============== boot ============== */
+async function boot(){
+  Store.loadLocal();
+  await Store.pull();
+  seedIfEmpty();
+  renderAll();
+  if(CFG.GAS_URL){ setInterval(async()=>{ await Store.pull(); renderAll(); }, CFG.POLL_MS); }
+}
+boot();
+</script>
+</body>
+</html>
