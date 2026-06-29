@@ -40,6 +40,81 @@
   .navy .s-catch{color:#fff}
   .s-catch .g{color:var(--gold)} .navy .s-catch .g{color:var(--gold-pop)}
   .s-catch .r{color:var(--warn)}
+  .supp{display:inline-block;font-family:var(--zen);font-weight:900;font-size:clamp(10px,1.1vw,12px);letter-spacing:.08em;color:#7a8290;background:#eef1f5;border:1px solid #dfe4ea;border-radius:999px;padding:3px 12px;margin-bottom:clamp(8px,1.4vh,14px)}
+  .navy .supp{color:#cdd6e3;background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.20)}
+  .slide.is-supp .inner{opacity:.98}
+  .chips{display:flex;flex-wrap:wrap;gap:clamp(8px,1.1vw,13px);justify-content:center;margin:clamp(10px,1.8vh,20px) 0}
+  .chip{font-family:var(--zen);font-weight:700;font-size:clamp(13px,1.55vw,18px);color:var(--navy);background:#fff;border:1.5px solid #e3e7ee;border-radius:999px;padding:clamp(8px,1vw,12px) clamp(15px,1.9vw,23px);box-shadow:0 2px 8px rgba(0,0,0,.05)}
+  .chip.more{color:var(--faint);border-style:dashed;box-shadow:none}
+  /* timeline (物件が出てから) */
+  .tlx{margin:clamp(20px,3.6vh,34px) 0 clamp(6px,1.2vh,12px)}
+  .tlx-dates,.tlx-labs{display:flex}
+  .tlx-dates>span,.tlx-labs>span{flex:1;text-align:center;font-family:var(--zen)}
+  .tlx-dates>span{font-weight:900;color:var(--ink-soft);font-size:clamp(13px,1.6vw,19px);padding-bottom:clamp(6px,1vh,10px)}
+  .tlx-dates>span.hot{color:var(--gold)}
+  .tlx-labs>span{font-weight:700;color:var(--ink);font-size:clamp(11px,1.25vw,14px);padding-top:clamp(8px,1.2vh,12px);line-height:1.4}
+  .tlx-labs>span.strong{color:var(--navy);font-weight:900}
+  .tlx-labs .tlx-sub{display:block;color:var(--faint);font-weight:600;font-size:.84em;margin-top:2px}
+  .tlx-track{position:relative;height:clamp(20px,2.6vh,26px)}
+  .tlx-line{position:absolute;left:12.5%;right:12.5%;top:50%;transform:translateY(-50%);height:2px;background:#dde2ea}
+  .tlx-span{position:absolute;left:37.5%;width:50%;top:50%;transform:translateY(-50%);height:7px;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--gold-pop))}
+  .tlx-span::after{content:"";position:absolute;right:-2px;top:50%;transform:translateY(-50%);border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:11px solid var(--gold-pop)}
+  .tlx-badge{position:absolute;left:50%;top:-30px;transform:translateX(-50%);white-space:nowrap;background:var(--navy);color:#fff;font-family:var(--zen);font-weight:900;font-size:clamp(12px,1.4vw,16px);padding:4px 14px;border-radius:999px;box-shadow:0 4px 12px rgba(26,61,107,.25)}
+  .tlx-badge::after{content:"";position:absolute;left:50%;bottom:-5px;transform:translateX(-50%) rotate(45deg);width:9px;height:9px;background:var(--navy)}
+  .tlx-dots{position:absolute;inset:0;display:flex;align-items:center}
+  .tlx-dots>i{flex:1;display:flex;justify-content:center}
+  .tlx-dots>i::before{content:"";width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid var(--gold);box-shadow:0 0 0 4px #fff}
+  .tlx-dots>i.hot::before{background:var(--gold)}
+  .tlx-dots>i.big::before{width:18px;height:18px;border-color:var(--gold-pop);background:var(--gold-pop)}
+  /* gantt (家賃の重なり) */
+  .gantt{margin:clamp(16px,2.6vh,24px) 0 clamp(6px,1vh,10px)}
+  .gt-area{position:relative}
+  .gt-bar{height:clamp(40px,5.6vh,54px);border-radius:11px;display:flex;align-items:center;padding:0 clamp(13px,1.8vw,20px);font-family:var(--zen);font-weight:800;font-size:clamp(11px,1.3vw,15px);color:#fff;box-shadow:0 3px 10px rgba(0,0,0,.10)}
+  .gt-bar+.gt-bar{margin-top:clamp(10px,1.6vh,16px)}
+  .gt-bar.old{background:linear-gradient(90deg,#3c4c66,#28354a)}
+  .gt-bar.new{background:linear-gradient(90deg,var(--gold),var(--gold-pop));color:#3a2e05}
+  .gt-overlap{position:absolute;top:-7px;bottom:-7px;background:rgba(208,90,82,.14);border:2px dashed var(--warn);border-radius:11px;display:flex;align-items:center;justify-content:center;z-index:3}
+  .gt-otag{background:var(--warn);color:#fff;font-family:var(--zen);font-weight:900;font-size:clamp(11px,1.3vw,15px);line-height:1.3;text-align:center;padding:5px 11px;border-radius:9px;box-shadow:0 3px 9px rgba(208,90,82,.35)}
+  /* 沿線リスト（5p）と注釈 */
+  .linelist{display:flex;flex-direction:column;gap:clamp(8px,1.2vh,13px);margin:clamp(6px,1.4vh,16px) auto;max-width:640px}
+  .linerow{display:flex;align-items:center;gap:clamp(11px,1.5vw,18px);background:#fff;border:1.5px solid #e3e7ee;border-radius:12px;padding:clamp(10px,1.3vw,15px) clamp(15px,2vw,22px);box-shadow:0 2px 9px rgba(0,0,0,.05)}
+  .lr-no{flex:none;width:clamp(28px,3.2vw,36px);height:clamp(28px,3.2vw,36px);border-radius:50%;background:var(--navy);color:#fff;font-family:var(--zen);font-weight:900;display:flex;align-items:center;justify-content:center;font-size:clamp(14px,1.6vw,18px)}
+  .lr-txt{font-family:var(--zen);font-weight:800;color:var(--ink);font-size:clamp(15px,1.85vw,22px);letter-spacing:.02em}
+  .note{margin-top:clamp(12px,1.8vh,18px);background:#f4f6fa;border:1px solid #e4e8ef;border-left:4px solid var(--gold);border-radius:10px;padding:clamp(10px,1.4vw,15px) clamp(15px,2vw,21px);font-family:var(--zen);font-weight:600;color:var(--ink-soft);font-size:clamp(12px,1.4vw,16px);line-height:1.65;text-align:left}
+  .navy .note{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);color:#d7deea}
+  /* タイムライン測定バー（9p）*/
+  .tlx-measure{position:relative;height:clamp(42px,6vh,56px);margin-top:clamp(8px,1.4vh,14px)}
+  .tlx-mbar{position:absolute;left:37.5%;width:50%;top:7px;height:3px;background:var(--gold);border-radius:2px}
+  .tlx-mbar::before{content:"";position:absolute;left:-2px;top:50%;transform:translateY(-50%);border:6px solid transparent;border-right-color:var(--gold)}
+  .tlx-mbar::after{content:"";position:absolute;right:-2px;top:50%;transform:translateY(-50%);border:6px solid transparent;border-left-color:var(--gold)}
+  .tlx-mlab{position:absolute;left:62.5%;top:18px;transform:translateX(-50%);white-space:nowrap;background:var(--gold);color:#3a2e05;font-family:var(--zen);font-weight:900;font-size:clamp(12px,1.55vw,18px);padding:6px 18px;border-radius:999px;box-shadow:0 3px 10px rgba(201,154,20,.32)}
+  /* サイドバー：追加ボタン・ヒント */
+  .addline{margin-top:6px;width:100%;border:1.5px dashed #c9cfd9;background:#fafbfd;color:#5a6473;border-radius:9px;padding:7px;font-family:var(--zen);font-weight:700;font-size:12px;cursor:pointer}
+  .addline:hover{border-color:var(--gold);color:var(--gold)}
+  .cpanel .hint{font-weight:700;color:var(--gold);font-size:.86em;margin-left:4px}
+  /* 二重賃料ガント（11p）*/
+  .ovl{--lw:clamp(48px,6.6vw,76px);--gap:clamp(8px,1.1vw,14px);margin:clamp(12px,2vh,20px) 0 clamp(8px,1.2vh,14px);background:#fff;border:1px solid #e6e9ef;border-radius:16px;padding:clamp(16px,2.2vw,24px) clamp(16px,2.2vw,24px) clamp(16px,2.2vw,22px);box-shadow:0 4px 16px rgba(0,0,0,.05)}
+  .ovl-marks{position:relative;height:clamp(18px,2.4vh,24px);margin-left:calc(var(--lw) + var(--gap))}
+  .ovl-mk{position:absolute;top:0;left:0;white-space:nowrap;font-family:var(--zen);font-weight:800;font-size:clamp(9.5px,1.15vw,13.5px);color:var(--navy)}
+  .ovl-mk .st{color:var(--warn)}
+  .ovl-mk.mid{left:50%;transform:translateX(-50%)}
+  .ovl-mk.end{left:100%;transform:translateX(-100%);color:var(--ink-soft);font-weight:700}
+  .ovl-row{display:flex;align-items:stretch;gap:var(--gap);margin-top:clamp(6px,1vh,9px)}
+  .ovl-name{width:var(--lw);flex:none;display:flex;flex-direction:column;justify-content:center;text-align:right;font-family:var(--zen);font-weight:900;color:var(--ink);font-size:clamp(12px,1.4vw,16px);line-height:1.2}
+  .ovl-name small{font-weight:700;color:var(--faint);font-size:.74em}
+  .ovl-track{position:relative;flex:1;height:clamp(38px,5.2vh,50px)}
+  .ovl-v{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--warn);z-index:4}
+  .ovl-v.dot{background:none;border-left:2px dotted #b9c0cc;width:0}
+  .ovl-seg{position:absolute;top:0;bottom:0;display:flex;align-items:center;justify-content:center;border-radius:9px;font-family:var(--zen);font-weight:800;font-size:clamp(9.5px,1.15vw,13.5px);text-align:center;padding:0 8px;line-height:1.3}
+  .ovl-seg.none{border:2px dashed #cfd5de;color:var(--faint)}
+  .ovl-seg.gold{background:linear-gradient(90deg,var(--gold),var(--gold-pop));color:#3a2e05;box-shadow:0 3px 9px rgba(201,154,20,.22)}
+  .ovl-seg.navy{background:linear-gradient(90deg,#3c4c66,#28354a);color:#fff;box-shadow:0 3px 9px rgba(26,61,107,.18)}
+  .ovl-phases{display:flex;gap:var(--gap);margin-top:clamp(8px,1.2vh,12px);margin-left:calc(var(--lw) + var(--gap))}
+  .ovl-ph{flex:1;border-radius:11px;padding:clamp(8px,1.2vw,13px);text-align:center;font-family:var(--zen);line-height:1.4}
+  .ovl-ph b{display:block;font-weight:900;font-size:clamp(11px,1.3vw,15px);margin-bottom:2px}
+  .ovl-ph i{font-style:normal;font-weight:700;font-size:clamp(9.5px,1.1vw,13px)}
+  .ovl-ph.one{background:#f1f4f9;color:var(--ink-soft)}
+  .ovl-ph.two{background:#fdeeee;border:2px solid var(--warn);color:var(--warn)}
 
   .figure{margin-top:clamp(26px,4.2vh,50px)}
 
@@ -274,7 +349,40 @@ body.has-panel .fsbtn{right:420px}
           <div class="vmid">≠</div>
           <div class="vcol a"><div class="vh">希望</div><div class="vl">あれば嬉しい条件。<br>優先度で柔軟に調整</div></div>
         </div>
-        <div class="reframe" style="margin-top:clamp(18px,2.6vh,26px)">この線引きを、<b class="g">ビデオで一緒に</b>やります。</div>
+        <div class="reframe" style="margin-top:clamp(18px,2.6vh,26px)">必須と希望を<b>ごっちゃ</b>にすると、<b class="r">良い物件を逃します</b>。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide paper">
+    <div class="inner">
+      <span class="s-label">コツ① ― 深掘り｜最初に決めること</span>
+      <div class="s-catch">必須条件は、<span class="g">"極限まで"</span>考え切ることが大事です。</div>
+      <div class="figure">
+        <div class="tlist">
+          <div class="tcard"><div class="tnum">¥</div><div class="tb"><div class="ttt">家賃：11万まで？</div><div class="ttd">「11.1万は？ 11.2万は？」ざっくり"11万円"で区切ると、優良物件が検索から消えます。</div></div></div>
+          <div class="tcard"><div class="tnum">徒</div><div class="tb"><div class="ttt">徒歩：11分は無理？</div><div class="ttd">たった1分の差で、出てくる物件の数が変わります。</div></div></div>
+          <div class="tcard"><div class="tnum">㎡</div><div class="tb"><div class="ttt">広さ：20平米は本当に必要？</div><div class="ttd">19平米でも、レイアウト次第で"8畳"ある部屋もあります。</div></div></div>
+        </div>
+        <div class="reframe" style="margin-top:clamp(16px,2.4vh,22px)">この線引き、<b class="g">今やりましょう</b>。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide paper">
+    <div class="inner">
+      <span class="s-label">コツ① ― 深掘りパート2｜設備面の必須条件</span>
+      <div class="s-catch">設備も、<span class="g">必須</span>と<span class="g">希望</span>を分ける。</div>
+      <div class="figure">
+        <div class="chips">
+          <span class="chip">独立洗面台</span>
+          <span class="chip">南向き</span>
+          <span class="chip">2口コンロ</span>
+          <span class="chip">オートロック</span>
+          <span class="chip">ペット可</span>
+          <span class="chip more">…等々</span>
+        </div>
+        <div class="reframe" style="margin-top:clamp(14px,2.2vh,22px)">本当に<b class="r">必須</b>か？それとも<b class="g">希望</b>か。<b class="g">一緒に考えましょう</b>。</div>
       </div>
     </div>
   </section>
@@ -282,35 +390,23 @@ body.has-panel .fsbtn{right:420px}
   <section class="slide paper">
     <div class="inner">
       <span class="s-label">コツ②</span>
-      <div class="s-catch">必須条件は、<span class="g">"極限まで"</span>考え切る。</div>
-      <div class="figure">
-        <div class="tlist">
-          <div class="tcard"><div class="tnum">¥</div><div class="tb"><div class="ttt">家賃：11万まで？</div><div class="ttd">「11.1万は？ 11.2万は？」ざっくり"11万円"で区切ると、優良物件が検索から消えます。</div></div></div>
-          <div class="tcard"><div class="tnum">徒</div><div class="tb"><div class="ttt">徒歩：11分は無理？</div><div class="ttd">たった1分の差で、出てくる物件の数が変わります。</div></div></div>
-          <div class="tcard"><div class="tnum">㎡</div><div class="tb"><div class="ttt">広さ：20平米は本当に必要？</div><div class="ttd">19平米でも、レイアウト次第で"8畳"ある部屋もあります。</div></div></div>
-        </div>
-        <div class="reframe" style="margin-top:clamp(16px,2.4vh,22px)">この線引きも、<b class="g">ビデオで一緒に</b>やります。</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="slide paper">
-    <div class="inner">
-      <span class="s-label">コツ③</span>
       <div class="s-catch">沿線は、<span class="g">"3つまで"</span>に絞る。</div>
       <div class="figure">
-        <div class="statbig">3<small>路線</small></div>
-        <div class="statcap">本気で追いきれる、沿線の数の目安</div>
-        <div class="downarrow2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15"/><path d="M6 13l6 6 6-6"/></svg></div>
-        <div class="reframe">多すぎると、毎日の新着を<b class="g">追いきれません</b>。</div>
-        <div class="src center">※ 家賃補助の対象エリアがある方は、別途ご相談ください</div>
+        <div class="statcap" style="margin-bottom:clamp(4px,1vh,10px)">「○○線：××駅 〜 ××駅」の形で、<b style="color:var(--navy)">3つ</b>考えます。</div>
+        <div class="linelist">
+          <div class="linerow"><span class="lr-no">①</span><span class="lr-txt">○○線：××駅 〜 ××駅</span></div>
+          <div class="linerow"><span class="lr-no">②</span><span class="lr-txt">○○線：××駅 〜 ××駅</span></div>
+          <div class="linerow"><span class="lr-no">③</span><span class="lr-txt">○○線：××駅 〜 ××駅</span></div>
+        </div>
+        <div class="reframe" style="margin-top:clamp(12px,2vh,18px)">これ以上多いと、毎日の新着を<b class="g">追いきれません</b>。</div>
+        <div class="note">※ 家賃補助の対象エリアがある方、どうしてもエリアで出したい方は別途ご相談ください</div>
       </div>
     </div>
   </section>
 
   <section class="slide navy">
     <div class="inner">
-      <span class="s-label">コツ④</span>
+      <span class="s-label">コツ③</span>
       <div class="s-catch">担当者と、物件の<span class="g">"採点"</span>を合わせる。</div>
       <div class="figure">
         <div class="proc">
@@ -325,7 +421,7 @@ body.has-panel .fsbtn{right:420px}
 
   <section class="slide paper">
     <div class="inner">
-      <span class="s-label">コツ⑤</span>
+      <span class="s-label">コツ④</span>
       <div class="s-catch">入居日は、<span class="g">"絞りすぎない"</span>。</div>
       <div class="figure">
         <div style="display:flex;gap:clamp(14px,2vw,26px);align-items:stretch">
@@ -333,48 +429,50 @@ body.has-panel .fsbtn{right:420px}
           <div class="vcol b" style="flex:1;display:flex;flex-direction:column;gap:clamp(7px,1.1vh,11px);justify-content:center"><div class="vh" style="color:#7c5e08">◯ 1ヶ月前倒しOK</div><div style="text-align:center;font-family:var(--zen);font-weight:700;color:var(--ink);font-size:clamp(12px,1.4vw,15.5px);line-height:1.55">入居日：1/1〜1/30<span style="display:block;color:var(--ink-soft);font-weight:600;font-size:.96em;margin-top:2px">メイン物件の出現：11/15〜12/15<span style="color:var(--faint)">（30日）</span></span></div><div style="display:flex;flex-wrap:wrap;gap:clamp(4px,.6vw,7px);justify-content:center;min-height:clamp(44px,6.6vh,62px);align-content:center"><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span></div><div style="text-align:center;font-family:var(--zen);font-weight:900;color:#7c5e08;font-size:clamp(22px,2.8vw,32px)">15件</div></div>
         </div>
         <div style="text-align:center;font-family:var(--zen);font-weight:700;color:var(--faint);font-size:clamp(11px,1.2vw,13px);margin-top:8px">＝ その期間にピンポイントで入居できる、人気物件の数</div>
-        <div class="reframe" style="margin-top:clamp(10px,1.6vh,16px)">人気物件は<b class="r">出てすぐ取られる</b>（取り置き不可）。希望日から<b class="g">"1ヶ月前倒し"</b>が吉。</div>
+        <div class="reframe" style="margin-top:clamp(10px,1.6vh,16px)">人気物件は<b class="r">出てすぐ取られる</b>（取り置き不可）。最速入居日は、入居リミットから<b class="g">"1ヶ月以上前"</b>が吉。</div>
       </div>
     </div>
   </section>
 
   <section class="slide paper">
     <div class="inner">
-      <span class="s-label">最初に決めること</span>
+      <span class="s-label">入居日について</span>
       <div class="s-catch">決めるのは、<span class="g">この"2つ"</span>。</div>
       <div class="figure">
         <div class="vs">
-          <div class="vcol a"><div class="vh">① リミット</div><div class="vl">いつまでに<b>引っ越さないといけないか</b>（締切）</div></div>
+          <div class="vcol a"><div class="vh">① 最速入居</div><div class="vl">どんなに早ければ、<b>いつ入居できるか</b></div></div>
           <div class="vmid">＆</div>
-          <div class="vcol b"><div class="vh">② 最速入居</div><div class="vl">どんなに早ければ、<b>いつ入居できるか</b></div></div>
+          <div class="vcol b"><div class="vh">② リミット</div><div class="vl">いつまでに<b>引っ越さないといけないか</b>（締切）</div></div>
         </div>
         <div class="reframe" style="margin-top:clamp(18px,2.6vh,26px)">この2つが決まると、<b class="g">探せる物件がはっきり</b>します。</div>
       </div>
     </div>
   </section>
 
-  <section class="slide paper">
+  <section class="slide paper is-supp">
     <div class="inner">
+      <span class="supp">補足資料</span>
       <span class="s-label">物件が出てから入居まで</span>
       <div class="s-catch">退去申請から入居まで、ざっくり<span class="g">"1.5ヶ月"</span>。</div>
       <div class="figure">
-        <div class="flow">
-          <div class="fnode"><div class="ftslot"><span class="ftag gold">1/1</span></div><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 13h5M10 17h5"/></svg></div><div class="flab">退去申請</div></div>
-          <div class="fchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
-          <div class="fnode"><div class="ftslot"><span class="ftag gold">1/2</span></div><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 9h.01M9 13h.01M9 17h.01M15 9h.01M15 13h.01M15 17h.01"/></svg></div><div class="flab">業者サイトに掲載<span class="fsub">情報公開</span></div></div>
-          <div class="fchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
-          <div class="fnode"><div class="ftslot"><span class="ftag gold">2/1</span></div><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg></div><div class="flab">退去<span class="fsub">申請から1ヶ月後</span></div></div>
-          <div class="fchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
-          <div class="fnode ours"><div class="ftslot"><span class="ftag gold">2/8〜15</span></div><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 20 3"/><path d="M16 7l3 3"/></svg></div><div class="flab">入居可能<span class="fsub">退去後1〜2週で<br>クリーニング完了</span></div></div>
+        <div class="tlx">
+          <div class="tlx-dates"><span>1/1</span><span class="hot">1/2</span><span>2/1</span><span class="hot">2/8〜15</span></div>
+          <div class="tlx-track">
+            <div class="tlx-line"></div>
+            <div class="tlx-dots"><i></i><i class="hot"></i><i></i><i class="hot big"></i></div>
+          </div>
+          <div class="tlx-labs"><span>退去申請</span><span class="strong">業者サイトに掲載<span class="tlx-sub">あなたが見つけられる</span></span><span>退去<span class="tlx-sub">申請から1ヶ月後</span></span><span class="strong">入居可能<span class="tlx-sub">退去後1〜2週で完了</span></span></div>
+          <div class="tlx-measure"><div class="tlx-mbar"></div><span class="tlx-mlab">掲載 → 入居まで 約1.5ヶ月</span></div>
         </div>
-        <div class="reframe" style="margin-top:clamp(16px,2.4vh,22px)">→ <b class="g">約1.5ヶ月後</b>に入居できる新着が多い。</div>
+        <div class="reframe" style="margin-top:clamp(16px,2.4vh,22px)">→ <b class="g">掲載から入居まで約1.5ヶ月</b>。この時期の新着が多い。</div>
         <div class="src center">※ クリーニング完了後に公開する物件も／日数は物件によります。</div>
       </div>
     </div>
   </section>
 
-  <section class="slide navy">
+  <section class="slide navy is-supp">
     <div class="inner">
+      <span class="supp">補足資料</span>
       <span class="s-label">探し始めるタイミング</span>
       <div class="s-catch">探し始めは、早くても<span class="g">"2ヶ月前"</span>。</div>
       <div class="figure">
@@ -385,19 +483,41 @@ body.has-panel .fsbtn{right:420px}
     </div>
   </section>
 
-  <section class="slide paper">
+  <section class="slide paper is-supp">
     <div class="inner">
+      <span class="supp">補足資料</span>
       <span class="s-label">よくある勘違い</span>
       <div class="s-catch">退去日と入居日を<span class="r">"同じ"</span>にすれば、費用は抑えられる？</div>
       <div class="figure">
-        <div class="reframe">→ いずれにせよ、家賃は <b class="r">約2週間</b> 重なることが多いです。</div>
-        <div class="vs" style="margin-top:clamp(13px,2vh,20px)">
-          <div class="vcol a"><div class="vh">旧居（今の家）</div><div class="vl">退去申請から<b>1ヶ月後</b>まで賃料が発生</div></div>
-          <div class="vmid">＆</div>
-          <div class="vcol b"><div class="vh">新居</div><div class="vl">審査通過から<b>原則2週間以内</b>に賃料が発生</div></div>
+        <div class="reframe" style="margin-bottom:clamp(4px,1vh,8px)">→ 審査通過後に退去申請を出すと、1ヶ月のうち後半の<b class="r">約2週間</b>は旧居と新居の賃料が<b class="r">二重</b>にかかります。</div>
+        <div class="ovl">
+          <div class="ovl-marks">
+            <span class="ovl-mk"><span class="st">★</span> 審査通過 ＝ 退去申請日</span>
+            <span class="ovl-mk mid"><span class="st">★</span> 入居日（2週間後）</span>
+            <span class="ovl-mk end">退去日（1ヶ月後）</span>
+          </div>
+          <div class="ovl-row">
+            <div class="ovl-name">新居<small>（次）</small></div>
+            <div class="ovl-track">
+              <span class="ovl-v" style="left:0"></span><span class="ovl-v" style="left:50%"></span><span class="ovl-v dot" style="left:100%"></span>
+              <div class="ovl-seg none" style="left:0;width:50%">まだ賃料なし</div>
+              <div class="ovl-seg gold" style="left:50%;width:50%">新居の賃料（入居日から発生）</div>
+            </div>
+          </div>
+          <div class="ovl-row">
+            <div class="ovl-name">旧居<small>（今）</small></div>
+            <div class="ovl-track">
+              <span class="ovl-v" style="left:0"></span><span class="ovl-v" style="left:50%"></span><span class="ovl-v dot" style="left:100%"></span>
+              <div class="ovl-seg navy" style="left:0;width:100%">旧居の賃料（退去日までずっと発生）</div>
+            </div>
+          </div>
+          <div class="ovl-phases">
+            <div class="ovl-ph one"><b>前半 約2週間</b><i>賃料 ×1（旧居のみ）</i></div>
+            <div class="ovl-ph two"><b>後半 約2週間 ＝ ここが二重！</b><i>賃料 ×2（旧居＋新居）</i></div>
+          </div>
         </div>
-        <div class="src center">※ 多くの方が「審査が通ってから」退去申請を出すため。契約内容により異なります。</div>
-        <div style="margin-top:clamp(12px,1.8vh,18px);background:#f1f4f9;border-radius:14px;padding:clamp(11px,1.6vw,17px) clamp(16px,2.2vw,24px);text-align:center;font-family:var(--zen);font-weight:700;color:var(--ink);font-size:clamp(13px,1.5vw,17px);line-height:1.65">被るのは"もったいない"ですが、仕方ない部分です。<br>先に退去 → それから探して<b style="color:var(--navy)">"被り"をなくしたい</b>場合は、<b class="g">ご相談ください</b>。</div>
+        <div class="src center">※ 退去日・入居日のタイミングや契約内容により異なります。</div>
+        <div style="margin-top:clamp(10px,1.6vh,16px);background:#f1f4f9;border-radius:14px;padding:clamp(11px,1.6vw,17px) clamp(16px,2.2vw,24px);text-align:center;font-family:var(--zen);font-weight:700;color:var(--ink);font-size:clamp(12.5px,1.45vw,16.5px);line-height:1.65">被るのは"もったいない"ですが、<b style="color:var(--navy)">"審査通過前の退去"</b>は怖いという方が多く、仕組み上どうしても生じやすい部分です。<br>先に退去 → それから探して<b style="color:var(--navy)">"被り"をなくしたい</b>場合は、<b class="g">ご相談ください</b>。</div>
       </div>
     </div>
   </section>
@@ -409,10 +529,8 @@ body.has-panel .fsbtn{right:420px}
       <div class="figure">
         <div class="recap">
           <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">「必須」と「希望」を分け、必須は<span class="g">"極限まで"</span>詰める。</span></div>
-          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">沿線は<span class="g">3つまで</span>／担当者と物件の<span class="g">"採点"</span>を合わせる。</span></div>
-          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">入居日は<span class="g">"絞りすぎない"</span>（希望日から1ヶ月の幅をもたせる）。</span></div>
-          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">探し始めは<span class="g">"2ヶ月前"</span>／出てから入居まで<span class="g">約1.5ヶ月</span>。</span></div>
-          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">家賃は<span class="g">約2週間</span>重なる前提で、日取りを組む。</span></div>
+          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">設備も<span class="g">必須／希望</span>を線引き。沿線は<span class="g">3つまで</span>。</span></div>
+          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">担当者と物件の<span class="g">"採点"</span>を合わせ、入居日は<span class="g">"絞りすぎない"</span>。</span></div>
         </div>
         <div class="closing">探し方と日取りを整えて、出会える数を増やしましょう。</div>
       </div>
@@ -441,7 +559,7 @@ body.has-panel .fsbtn{right:420px}
 <div class="nav">
   <button id="prev" aria-label="前へ">‹</button>
   <div class="dots" id="dots"></div>
-  <span class="counter" id="counter">1 / 11</span>
+  <span class="counter" id="counter">1 / 12</span>
   <button id="next" aria-label="次へ">›</button>
 </div>
 
@@ -486,15 +604,16 @@ body.has-panel .fsbtn{right:420px}
     </div>
   </div>
   <div class="body">
-    <div class="grp" data-g="1"><div class="gh"><span class="pill">コツ①</span>必須 / 希望</div>
-      <div class="flds"><div class="cf"><label>必須</label><textarea id="cf_must" placeholder="家賃・徒歩・広さ…"></textarea></div><div class="cf"><label>希望</label><textarea id="cf_hope" placeholder="2F以上・独立洗面…"></textarea></div></div></div>
-    <div class="grp" data-g="2"><div class="gh"><span class="pill">コツ②</span>必須条件を極限まで</div>
-      <div class="flds"><div class="cf"><label>家賃 上限</label><input id="cf_rent" placeholder="9.0万"></div><div class="cf"><label>徒歩</label><input id="cf_walk" placeholder="10分以内"></div><div class="cf"><label>広さ</label><input id="cf_size" placeholder="25㎡〜"></div></div></div>
-    <div class="grp" data-g="3"><div class="gh"><span class="pill">コツ③</span>沿線（3つまで）</div>
-      <div class="flds"><div class="cf"><label>①</label><input id="cf_line1"></div><div class="cf"><label>②</label><input id="cf_line2"></div><div class="cf"><label>③</label><input id="cf_line3"></div></div></div>
-    <div class="grp" data-g="6 7 8 9 5"><div class="gh"><span class="pill">日取り</span>入居・スケジュール</div>
-      <div class="flds"><div class="cf"><label>リミット</label><input id="cf_limit" placeholder="2/末"></div><div class="cf"><label>最速入居</label><input id="cf_fastest"></div><div class="cf"><label>入居日の幅</label><input id="cf_span" placeholder="1ヶ月"></div></div></div>
-    <div class="grp" data-g="4"><div class="gh"><span class="pill">メモ</span>採点・その他</div>
+    <div class="grp" data-g="1 2"><div class="gh"><span class="pill">コツ①</span>最初に決めること（家賃・徒歩・広さ）</div>
+      <div class="flds"><div class="cf"><label>家賃 上限</label><input id="cf_rent" placeholder="9.0万"></div><div class="cf"><label>徒歩</label><input id="cf_walk" placeholder="10分以内"></div><div class="cf"><label>広さ</label><input id="cf_size" placeholder="20㎡〜"></div></div></div>
+    <div class="grp" data-g="3"><div class="gh"><span class="pill">コツ②</span>設備面等の必須・希望条件</div>
+      <div class="flds"><div class="cf"><label>必須設備</label><textarea id="cf_eqmust" placeholder="独立洗面台・2口コンロ…"></textarea></div><div class="cf"><label>希望設備</label><textarea id="cf_eqhope" placeholder="南向き・2階以上…"></textarea></div></div></div>
+    <div class="grp" data-g="4"><div class="gh"><span class="pill">コツ③</span>沿線（○○線：××駅〜××駅／3つまで）</div>
+      <div class="flds" id="cf_lines"></div>
+      <button class="addline" id="cf_addline" type="button">＋ 沿線を追加</button></div>
+    <div class="grp" data-g="6 7 8 9 10"><div class="gh"><span class="pill">日取り</span>入居・スケジュール</div>
+      <div class="flds"><div class="cf"><label>リミット</label><input id="cf_limit" placeholder="2/末"></div><div class="cf"><label>最速入居</label><input id="cf_fastest"></div><div class="cf"><label>入居日の幅 <span class="hint">30日以上推奨</span></label><input id="cf_span" placeholder="30日〜"></div></div></div>
+    <div class="grp" data-g="5"><div class="gh"><span class="pill">メモ</span>採点・その他</div>
       <div class="flds"><div class="cf"><label></label><textarea id="cf_memo" placeholder="担当者と採点をすり合わせ…"></textarea></div></div></div>
   </div>
   <div class="savebar">
@@ -505,33 +624,35 @@ body.has-panel .fsbtn{right:420px}
 <script>
 (function(){
   var KEY='avlib:consults', CUR='avlib:consult_current';
-  var FIELDS=['name','date','rent','walk','size','line1','line2','line3','limit','fastest','span','must','hope','memo'];
+  var FIELDS=['name','date','rent','walk','size','limit','fastest','span','eqmust','eqhope','memo'];
+  var CIRC=['','①','②','③','④','⑤','⑥','⑦','⑧','⑨','⑩'];
   function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')||[]}catch(e){return []}}
   function save(a){try{localStorage.setItem(KEY,JSON.stringify(a))}catch(e){}}
   function curId(){var id=localStorage.getItem(CUR); if(!id){id='c'+Date.now(); localStorage.setItem(CUR,id);} return id;}
   function el(f){return document.getElementById('cf_'+f);}
   function rec(){var a=load(), id=curId(), r=null; for(var i=0;i<a.length;i++){if(a[i].id===id){r=a[i];break;}} if(!r){r={id:id}; a.push(r);} return {a:a,r:r};}
   function updateCount(){var c=document.getElementById('cf_count'); if(c){var n=0,a=load(); for(var i=0;i<a.length;i++){if((a[i].name&&a[i].name.trim())||a[i].date)n++;} c.textContent=n;}}
-  function flush(){var o=rec(); for(var i=0;i<FIELDS.length;i++){var e=el(FIELDS[i]); o.r[FIELDS[i]]=e?e.value:'';} o.r.updatedAt=Date.now(); save(o.a); updateCount();}
-  function loadCur(){var o=rec(); for(var i=0;i<FIELDS.length;i++){var e=el(FIELDS[i]); if(e)e.value=o.r[FIELDS[i]]||'';}}
-  function neww(){flush(); localStorage.setItem(CUR,'c'+Date.now()); for(var i=0;i<FIELDS.length;i++){var e=el(FIELDS[i]); if(e)e.value='';} flush(); var n=el('name'); if(n)n.focus();}
+  function lineBox(){return document.getElementById('cf_lines');}
+  function lineInputs(){var b=lineBox(); return b?b.querySelectorAll('.cf_line'):[];}
+  function bindField(e){e.addEventListener('input',flush); e.addEventListener('change',flush); e.addEventListener('keydown',function(ev){ev.stopPropagation();}); e.addEventListener('click',function(ev){ev.stopPropagation();});}
+  function addLineRow(val){var box=lineBox(); if(!box)return null; var n=box.querySelectorAll('.cf_line').length+1; var d=document.createElement('div'); d.className='cf'; var lab=document.createElement('label'); lab.textContent='沿線'+(CIRC[n]||('#'+n)); var inp=document.createElement('input'); inp.className='cf_line'; inp.placeholder='○○線：××駅〜××駅'; inp.value=val||''; d.appendChild(lab); d.appendChild(inp); box.appendChild(d); bindField(inp); return inp;}
+  function setLines(arr){var box=lineBox(); if(!box)return; box.innerHTML=''; var a=(arr&&arr.length)?arr.slice():['','','']; while(a.length<3)a.push(''); for(var i=0;i<a.length;i++){addLineRow(a[i]);}}
+  function getLines(){var out=[]; var ins=lineInputs(); for(var i=0;i<ins.length;i++)out.push(ins[i].value); return out;}
+  function flush(){var o=rec(); for(var i=0;i<FIELDS.length;i++){var e=el(FIELDS[i]); o.r[FIELDS[i]]=e?e.value:'';} o.r.lines=getLines(); o.r.updatedAt=Date.now(); save(o.a); updateCount();}
+  function loadCur(){var o=rec(); for(var i=0;i<FIELDS.length;i++){var e=el(FIELDS[i]); if(e)e.value=o.r[FIELDS[i]]||'';} setLines(o.r.lines||['','','']);}
+  function neww(){flush(); localStorage.setItem(CUR,'c'+Date.now()); for(var i=0;i<FIELDS.length;i++){var e=el(FIELDS[i]); if(e)e.value='';} setLines(['','','']); flush(); var n=el('name'); if(n)n.focus();}
   function highlight(){
     var sl=document.querySelectorAll('.slide'); var idx=-1;
     for(var i=0;i<sl.length;i++){ if(sl[i].classList.contains('active')){idx=i;break;} }
     var grps=document.querySelectorAll('.cpanel .grp');
-    grps.forEach(function(g){
-      var map=(g.getAttribute('data-g')||'').split(' ');
-      g.classList.toggle('cur', map.indexOf(String(idx))>=0);
-    });
+    grps.forEach(function(g){ var map=(g.getAttribute('data-g')||'').split(' '); g.classList.toggle('cur', map.indexOf(String(idx))>=0); });
   }
   document.addEventListener('DOMContentLoaded',function(){
-    for(var i=0;i<FIELDS.length;i++){var e=el(FIELDS[i]); if(e){e.addEventListener('input',flush); e.addEventListener('change',flush);}}
+    for(var i=0;i<FIELDS.length;i++){var e=el(FIELDS[i]); if(e)bindField(e);}
+    var add=document.getElementById('cf_addline'); if(add){add.addEventListener('click',function(ev){ev.stopPropagation(); var inp=addLineRow(''); if(inp)inp.focus(); flush();}); add.addEventListener('keydown',function(ev){ev.stopPropagation();});}
     var nb=document.getElementById('cf_new'); if(nb)nb.addEventListener('click',function(ev){ev.stopPropagation(); neww();});
     var sb=document.getElementById('cf_save'); if(sb)sb.addEventListener('click',function(ev){ev.stopPropagation(); flush(); sb.textContent='保存しました'; setTimeout(function(){sb.textContent='保存';},1200);});
-    document.querySelectorAll('.cpanel input,.cpanel textarea,.cpanel button').forEach(function(e){
-      e.addEventListener('keydown',function(ev){ev.stopPropagation();});
-      e.addEventListener('click',function(ev){ev.stopPropagation();});
-    });
+    document.querySelectorAll('.cpanel input,.cpanel textarea,.cpanel button').forEach(function(e){ e.addEventListener('keydown',function(ev){ev.stopPropagation();}); e.addEventListener('click',function(ev){ev.stopPropagation();}); });
     loadCur(); updateCount(); highlight();
     var deck=document.getElementById('deck');
     if(deck && window.MutationObserver){ new MutationObserver(highlight).observe(deck,{attributes:true,subtree:true,attributeFilter:['class']}); }
