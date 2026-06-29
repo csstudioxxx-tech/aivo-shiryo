@@ -213,9 +213,47 @@
 .en-tbtn{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(180deg,#C99A14,#b6880f);color:#fff;font-weight:900;font-size:clamp(12px,1.2vw,14px);padding:11px 18px;border-radius:999px;text-decoration:none;white-space:nowrap;box-shadow:0 6px 16px rgba(0,0,0,.25)}
 .en-tbtn .eg-ar{color:#ffe39a}
 .en-tbtn:hover,.en-ghost:hover{filter:brightness(1.03)}
+
+/* ==== 条件入力パネル（この資料だけ） ==== */
+body.has-panel .deck{right:404px}
+body.has-panel .deck-next{right:404px}
+body.has-panel .nav{left:calc((100% - 404px)/2)}
+body.has-panel .hintbar{left:calc((100% - 404px)/2)}
+body.has-panel .fsbtn{right:420px}
+.cpanel{position:fixed;top:0;right:0;width:404px;height:100%;background:#f4f6f9;border-left:1px solid #e6eaf0;z-index:45;display:flex;flex-direction:column;font-family:var(--noto);color:var(--ink)}
+.cpanel .ch{padding:14px 16px 12px;border-bottom:1px solid #e9edf3;background:#fff}
+.cpanel .ch .t{font-family:var(--zen);font-weight:900;font-size:15px;color:var(--navy)}
+.cpanel .ch .s{font-size:11px;color:#94a0af;margin-top:2px}
+.cpanel .ch .row{display:flex;gap:8px;margin-top:11px}
+.cpanel .body{flex:1;overflow:auto;padding:13px 16px 22px}
+.cpanel .grp{margin-bottom:12px;border-radius:11px;padding:4px;transition:box-shadow .2s,background .2s}
+.cpanel .grp.cur{background:#fff;box-shadow:0 0 0 2px var(--gold),0 6px 16px rgba(0,0,0,.06)}
+.cpanel .grp.cur .gh .pill{background:var(--gold);color:#fff}
+.cpanel .gh{font-family:var(--zen);font-weight:900;font-size:12px;color:var(--navy);margin:4px 0 6px 4px}
+.cpanel .gh .pill{display:inline-block;background:#eef2f8;color:var(--navy);font-size:10px;padding:2px 8px;border-radius:999px;margin-right:6px}
+.cpanel .flds{display:flex;gap:7px;padding:0 4px}
+.cf{flex:1;display:flex;flex-direction:column;min-width:0}
+.cf label{font-size:10.5px;color:#94a0af;font-weight:700;margin-bottom:3px}
+.cf input,.cf textarea{font-family:var(--noto);font-size:13px;font-weight:600;color:var(--ink);background:#fff;border:1.5px solid #e6eaf0;border-radius:9px;padding:7px 9px;width:100%;outline:none}
+.cf input:focus,.cf textarea:focus{border-color:var(--gold)}
+.cf textarea{resize:vertical;min-height:44px;line-height:1.4}
+.cpanel .savebar{padding:10px 16px;border-top:1px solid #e9edf3;background:#fff;display:flex;align-items:center;justify-content:space-between}
+.cpanel .savebar .cnt{font-size:11px;color:#94a0af;font-weight:700}
+.cpanel .savebar .cnt b{color:var(--navy)}
+.btn-n{font-family:var(--zen);font-weight:900;font-size:12.5px;border-radius:999px;border:none;cursor:pointer;padding:9px 15px}
+.btn-n.gold{background:var(--gold-bright);color:var(--navy)}
+.btn-n.ghost{background:#fff;color:var(--navy);border:1.5px solid #e6eaf0}
+.btn-n:active{transform:translateY(1px)}
+@media (max-width:900px){
+  body.has-panel .deck,body.has-panel .deck-next{right:0;bottom:300px}
+  .cpanel{top:auto;bottom:0;width:100%;height:300px;border-left:none;border-top:1px solid #e6eaf0}
+  body.has-panel .nav,body.has-panel .hintbar{left:50%}
+  body.has-panel .fsbtn{right:16px}
+}
+
 </style>
 </head>
-<body>
+<body class="has-panel">
 <div class="deck" id="deck">
 
   <section class="slide navy active">
@@ -285,18 +323,98 @@
     </div>
   </section>
 
+  <section class="slide paper">
+    <div class="inner">
+      <span class="s-label">コツ⑤</span>
+      <div class="s-catch">入居日は、<span class="g">"絞りすぎない"</span>。</div>
+      <div class="figure">
+        <div style="display:flex;gap:clamp(14px,2vw,26px);align-items:stretch">
+          <div class="vcol a" style="flex:1;display:flex;flex-direction:column;gap:clamp(7px,1.1vh,11px);justify-content:center"><div class="vh" style="color:var(--warn)">✕ 5日間に絞る</div><div style="text-align:center;font-family:var(--zen);font-weight:700;color:var(--ink);font-size:clamp(12px,1.4vw,15.5px);line-height:1.55">入居日：1/25〜1/30<span style="display:block;color:var(--ink-soft);font-weight:600;font-size:.96em;margin-top:2px">メイン物件の出現：12/10〜12/15<span style="color:var(--faint)">（5日）</span></span></div><div style="display:flex;flex-wrap:wrap;gap:clamp(4px,.6vw,7px);justify-content:center;min-height:clamp(44px,6.6vh,62px);align-content:center"><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#d98f86" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#d98f86" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#d98f86" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#d98f86" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#d98f86" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span></div><div style="text-align:center;font-family:var(--zen);font-weight:900;color:var(--warn);font-size:clamp(22px,2.8vw,32px)">5件</div></div>
+          <div class="vcol b" style="flex:1;display:flex;flex-direction:column;gap:clamp(7px,1.1vh,11px);justify-content:center"><div class="vh" style="color:#7c5e08">◯ 1ヶ月前倒しOK</div><div style="text-align:center;font-family:var(--zen);font-weight:700;color:var(--ink);font-size:clamp(12px,1.4vw,15.5px);line-height:1.55">入居日：1/1〜1/30<span style="display:block;color:var(--ink-soft);font-weight:600;font-size:.96em;margin-top:2px">メイン物件の出現：11/15〜12/15<span style="color:var(--faint)">（30日）</span></span></div><div style="display:flex;flex-wrap:wrap;gap:clamp(4px,.6vw,7px);justify-content:center;min-height:clamp(44px,6.6vh,62px);align-content:center"><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span><span style="display:inline-flex;width:clamp(15px,1.7vw,21px);height:clamp(15px,1.7vw,21px)"><svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="#C99A14" d="M12 3 21 10.5V21h-6.5v-6h-5v6H3V10.5z"/></svg></span></div><div style="text-align:center;font-family:var(--zen);font-weight:900;color:#7c5e08;font-size:clamp(22px,2.8vw,32px)">15件</div></div>
+        </div>
+        <div style="text-align:center;font-family:var(--zen);font-weight:700;color:var(--faint);font-size:clamp(11px,1.2vw,13px);margin-top:8px">＝ その期間にピンポイントで入居できる、人気物件の数</div>
+        <div class="reframe" style="margin-top:clamp(10px,1.6vh,16px)">人気物件は<b class="r">出てすぐ取られる</b>（取り置き不可）。希望日から<b class="g">"1ヶ月前倒し"</b>が吉。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide paper">
+    <div class="inner">
+      <span class="s-label">最初に決めること</span>
+      <div class="s-catch">決めるのは、<span class="g">この"2つ"</span>。</div>
+      <div class="figure">
+        <div class="vs">
+          <div class="vcol a"><div class="vh">① リミット</div><div class="vl">いつまでに<b>引っ越さないといけないか</b>（締切）</div></div>
+          <div class="vmid">＆</div>
+          <div class="vcol b"><div class="vh">② 最速入居</div><div class="vl">どんなに早ければ、<b>いつ入居できるか</b></div></div>
+        </div>
+        <div class="reframe" style="margin-top:clamp(18px,2.6vh,26px)">この2つが決まると、<b class="g">探せる物件がはっきり</b>します。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide paper">
+    <div class="inner">
+      <span class="s-label">物件が出てから入居まで</span>
+      <div class="s-catch">退去申請から入居まで、ざっくり<span class="g">"1.5ヶ月"</span>。</div>
+      <div class="figure">
+        <div class="flow">
+          <div class="fnode"><div class="ftslot"><span class="ftag gold">1/1</span></div><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 13h5M10 17h5"/></svg></div><div class="flab">退去申請</div></div>
+          <div class="fchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
+          <div class="fnode"><div class="ftslot"><span class="ftag gold">1/2</span></div><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 9h.01M9 13h.01M9 17h.01M15 9h.01M15 13h.01M15 17h.01"/></svg></div><div class="flab">業者サイトに掲載<span class="fsub">情報公開</span></div></div>
+          <div class="fchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
+          <div class="fnode"><div class="ftslot"><span class="ftag gold">2/1</span></div><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg></div><div class="flab">退去<span class="fsub">申請から1ヶ月後</span></div></div>
+          <div class="fchev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
+          <div class="fnode ours"><div class="ftslot"><span class="ftag gold">2/8〜15</span></div><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 20 3"/><path d="M16 7l3 3"/></svg></div><div class="flab">入居可能<span class="fsub">退去後1〜2週で<br>クリーニング完了</span></div></div>
+        </div>
+        <div class="reframe" style="margin-top:clamp(16px,2.4vh,22px)">→ <b class="g">約1.5ヶ月後</b>に入居できる新着が多い。</div>
+        <div class="src center">※ クリーニング完了後に公開する物件も／日数は物件によります。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide navy">
+    <div class="inner">
+      <span class="s-label">探し始めるタイミング</span>
+      <div class="s-catch">探し始めは、早くても<span class="g">"2ヶ月前"</span>。</div>
+      <div class="figure">
+        <div class="statbig" style="color:var(--gold-pop)">2<small>ヶ月前</small></div>
+        <div class="statcap" style="color:rgba(255,255,255,.75)">3ヶ月前から探しても、その時期の新着はまだ出ていない（取り置きもない）。</div>
+        <div class="closing">早すぎても、ちょうど良い物件には出会えません。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide paper">
+    <div class="inner">
+      <span class="s-label">よくある勘違い</span>
+      <div class="s-catch">退去日と入居日を<span class="r">"同じ"</span>にすれば、費用は抑えられる？</div>
+      <div class="figure">
+        <div class="reframe">→ いずれにせよ、家賃は <b class="r">約2週間</b> 重なることが多いです。</div>
+        <div class="vs" style="margin-top:clamp(13px,2vh,20px)">
+          <div class="vcol a"><div class="vh">旧居（今の家）</div><div class="vl">退去申請から<b>1ヶ月後</b>まで賃料が発生</div></div>
+          <div class="vmid">＆</div>
+          <div class="vcol b"><div class="vh">新居</div><div class="vl">審査通過から<b>原則2週間以内</b>に賃料が発生</div></div>
+        </div>
+        <div class="src center">※ 多くの方が「審査が通ってから」退去申請を出すため。契約内容により異なります。</div>
+        <div style="margin-top:clamp(12px,1.8vh,18px);background:#f1f4f9;border-radius:14px;padding:clamp(11px,1.6vw,17px) clamp(16px,2.2vw,24px);text-align:center;font-family:var(--zen);font-weight:700;color:var(--ink);font-size:clamp(13px,1.5vw,17px);line-height:1.65">被るのは"もったいない"ですが、仕方ない部分です。<br>先に退去 → それから探して<b style="color:var(--navy)">"被り"をなくしたい</b>場合は、<b class="g">ご相談ください</b>。</div>
+      </div>
+    </div>
+  </section>
+
   <section class="slide navy">
     <div class="inner">
       <span class="s-label">まとめ</span>
-      <div class="s-catch">部屋探しのコツ、<span class="g">4つ</span>。</div>
+      <div class="s-catch">部屋探しの<span class="g">コツ</span>と<span class="g">日取り</span>。</div>
       <div class="figure">
         <div class="recap">
-          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">「必須」と「希望」を分ける。</span></div>
-          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">必須条件は<span class="g">"極限まで"</span>詰める（家賃・徒歩・広さ）。</span></div>
-          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">沿線は<span class="g">3つまで</span>に絞る。</span></div>
-          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">担当者と物件の<span class="g">"採点"</span>を合わせる。</span></div>
+          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">「必須」と「希望」を分け、必須は<span class="g">"極限まで"</span>詰める。</span></div>
+          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">沿線は<span class="g">3つまで</span>／担当者と物件の<span class="g">"採点"</span>を合わせる。</span></div>
+          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">入居日は<span class="g">"絞りすぎない"</span>（希望日から1ヶ月の幅をもたせる）。</span></div>
+          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">探し始めは<span class="g">"2ヶ月前"</span>／出てから入居まで<span class="g">約1.5ヶ月</span>。</span></div>
+          <div class="rpoint"><span class="rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="rt">家賃は<span class="g">約2週間</span>重なる前提で、日取りを組む。</span></div>
         </div>
-        <div class="closing">探し方を整えて、出会える数を増やしましょう。</div>
+        <div class="closing">探し方と日取りを整えて、出会える数を増やしましょう。</div>
       </div>
     </div>
   </section>
@@ -311,8 +429,7 @@
     <a class="en-card" href="heya-sagashi-slides.html"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCAB8ANwDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDlKcqlj8oJ+lNpQSOhxXoHEP8ALf8AuN+VGxt2Npz6YpA7DoxH40bmzncc+uaBkn2eYEAxNnp0/CmvG8ZG9SuemaTzZD/G350jMzfeJP1NABRRRQIKWkpaACiiigBaKSigBaSiigAooooAKSiigAoopKACiiigAoopDQAUlLSUAFFFFMBaWkopALRRRQAUtJRQAtFFFABS0lFAC0UlFAC0UlFABRRRQAUUUlAC0lFFABRRSUAFFFJQAUUUUxhRSUUALSgE9ATQGIGAePpVmO6uLdRtGxShTleoPJFS2+gK3Ur4IzkHigZPQZq1Nqd1MCHkGGABwBzjpTYr+eIgowGDkfKKm87bfiO0Svg+hoqc3s23blQNmzgY4qvVK/UTt0FooopiClpMH0NFAC0UlFAC0UBWPRSfwpKBhRRRQIKKKKACikzRQAZopKKACiiimMKSiigAooooAK2bCZbzXIQ8Mt3AFGIM5PCY4BODgjOO9Y4UkZCkj2FPSOQxvKgO2PG5h/DnpUuw0dVNpiyLMRbxPLLYu0KLbmKQsrjkp2OM9OoqOTTI/wCy3gW0H29bCOQxhP3gbzTk46524/Cudiju7gtNEs0rIQC65JGelKILwXKjy5lmbkZBDH3zWei0uV8jqo9LtHgltXtokuntreMEjBjmYOefQkhQaLixslYGztIpp4bNvKjK5EzrJsZiP4jgE4rkXEsYRnLL5g3qc/e56/mDT/Iugok2SBVXeG6YHqD+NFutwv5G9Ja2ovtMe9toreSSJnurcAr0JC4UHIZh0FVfEVrHFOZ2lgSSZQ6wRRkHBJzu5IBByOD27VkK8qyrOrPvBDB+c57HNWLi7up3XfGivCdxKQqpHPVsD+dUou+4r6HVvOn9imTz18prEKFyeWK7Bxn+8COlYWlSxgTB9OtpHtYWdhIrM0hBA5BPGM5OB0FEX9uktfx+Y3mIGL/KcqOny+xHHFZ0TXaXhki85bkZckAhh3J/nSUdxtjbiZ7uV5jGi4AyIowqgdOgq1oBxrtkcZxKDiqn2yfz5JhKfMlBDsMfMD1BpEeaznSRd0Uq4ZSRzyODV20sQd3bXr/6LMVAExgBAI/i3Hr36+grkb+1CwWlzDAfIaBTIy5xu3FTk9jkVStrmW0mEsDlJAMBsZx+dJ58vkeT5r+Tu3eXuO3Prj1qYwsynK5vadb6fHqM00cpZYoxPCWK7Ygcfe9WUkDH40uo2dpd3VrJCss0t0x3tE6hHI+83fb1BPbr0rDtby4s2draVomddjMvXGQf6U+41G7uRGJ7iR/LyFJPIB6jNHK7hdWNnVLXT7rXbu3t/PWVQx3Db5alV5464468delO0610vy9NkYySfvZGkd0VQQoUkNk9Bn9aw5NQupPP3TNi4bdKBwHPvS2uo3VpGUgl2oTu2lQwB9RkHBo5XbcLq4LFBc3nl25kWMqzAyYJ4Unt9Kit5UilDyQpOoH3HJAP5EGnJe3CGUrJgyklzgZOev061BVWJN67ubSCGCCayhjSa281pYYhuJYZAUnOAOmeuc1ZtLBP+EgSKTT5Zo0jQKYwAmNmNzDBzk5rnjd3Bs/splY24bcEPIB9vSrKa1qCFitwcsqrkqCRtG0EccHHGRzU8r6FXRTmwJnCxtEM/cY5K+xqOnSSPLIXkdnduSzHJNNqyQooopgFFFFAFi3vZ7aF4onwj5yMZzlSv8ia0beBLawksroiO4vMFQxx5e3ld3pk1jUEliSxJJ6k1jOlzbaf1oWpWOj0RpbOKWK5ZbRFlG5nUfOf7uc5zjoegqzBKftkN7KyA3EZhATDfMpJYenTHNcn1oBI6Ej6GsJ4Tmbk3v5FqrZJHX3s6jSZImiUoIN5VRgKuRgZxxnPHTOCaik1GMSXMIR4ljt9+1ApHITpkHtgenFcrk88nnrS7iTnJ596mOCilZv+tBuu2aVpevLdwWrOfsrzKCGAzguDzj3rctLS+RtUd47NmfzV8yTBLPvXIJPGM8c965AHBpxlcqVLuVY5ILHBPrXV7NLYy5u52ekSqdJhSKeIyW6o8oD42DzGJycYHB9fwqK1KRa1f3Eohmi+zN9nEnzNMgjIBB7Agcn14rj88EdjSgkdCR24o9nuHMbrgXNnpt7K1tBGsjLI6xrwN3C7AOcDJ5q3dLeXVrc6o1vG33RDEwUhYCG6qPYLz14rlqkaaVoliaV2jT7qFjhfoKrlDmNG9j8/TbO8jki2wwiFkLDdvDHjb34INMuIFvnnurKMJEkavKnQIxHIX2yCf0rNop2FcWkooqhBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAf/2Q==" alt="私たちの部屋探しの方法"><div class="ec-t">私たちの部屋探しの方法</div></a>
     <a class="en-card" href="heya-sagashi-bukken-moushikomi.html"><img src="data:image/jpeg;base64,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" alt="業者サイトの物件と申込み5種類"><div class="ec-t">業者サイトの物件と申込み5種類</div></a>
     <a class="en-card" href="heya-sagashi-kotsu.html"><img src="data:image/jpeg;base64,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" alt="部屋探しのコツ"><div class="ec-t">部屋探しのコツ</div></a>
-    <a class="en-card next" href="heya-sagashi-nyukyobi.html"><span class="en-badge">次へ</span><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCAB8ANwDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDlKcqlj8oJ+lNpQSOhxXoHEP8ALf8AuN+VGxt2Npz6YpA7DoxH40bmzncc+uaBkn2eYEAxNnp0/CmvG8ZG9SuemaTzZD/G350jMzfeJP1NABRRRQIKWkpaACiiigBaKSigBaSiigAooooAKSiigAoopKACiiigAoopDQAUlLSUAFFFFMBaWkopALRRRQAUtJRQAtFFFABS0lFAC0UlFAC0UlFABRRRQAUUUlAC0lFFABRRSUAFFFJQAUUUUxhRSUUALRSjbjkkH6Vbgis3UebcPGfLJI25+bsKiUuXUaVypRU3lwYbM3ORtwO3vRst93ErY3Hnb27UcyCxFRT9sQAPmHkdAvQ+hpJQiyERvvX1IxTuKw2iiimIKWkooAWikooAWikooAKKKKACiiigAopM0UAGaKSigAooopjCkoooAKKKKALelWyXmow20m4LKdu5SBt/2jnsOpqax03ztYexnZh5fmbincqCeOD6VBb3a29rKkcX7+UFTMT91D1AHYnufSrcOsLHdpdG1VrjYEkYtw/TJxjqVGD9c1Dv0GrFy40CKO7tIVacec+HOM4BXIwSByeeKp3umJb6cblUuYyJFTbMF5yCeMfT9akfXTJcWsz2wLQOzcuTuBAAXPoMVTkv1ewe2W1gh3SK+6IEZwCMHJPrSXN1G7C3WmyW9tHcb0MMiK6EkKWz1AHU4OapVev7y2vC8vkTLcPjkygovsBtzj0GeKqzOjlTHGI8KAwByCfX2qlfqSzSt9LhksYZ5JnjeUqFU7fmy+045z69R2qWx0E3i3JWYJ5U3lqW6EAnOePQVTstUe1t3iIeRSyEAyHaoDBjgepI6/Wr2n+IvsSOgtiyyTtMxEhVsnoOnTFS+boUrdSLUtIjtNTu7aKcskMPnAsvPb5T+dZ1rbvdSlFKqFUs7ucKijqTWhd60LvUHnmjkdJIPJcFgGI65yBjPTtVdNQjgmzBaR+T5exo5CWL87ssRjnIHT0xQuawna5LPpIhcD7ZC6gp5rAMPKDDIJBHSkh06OSOV1eScIyD9yB3Unv6YxVeW/eSCZCo8yd980ueX5yB7DNNguxDavC0Ecu5w/z5wMAjt9aianbRlJxvqaVto8Ml3JC7TDaiOOmRu6g8HpVebTVW7too5Sy3DDaSvIBxz79f0oi1h4bpZUhjCYQMgHUKOxPSorjUmmkhlSMQywECNkP3VHQfge9YxjX5tXpb9P8AMtunYYLQBYGeTy1llaNiwxsxjk/nUNxGsUm1JVlGAdy9ORnH4U64uBLFDGqlVjBzk5LMTkn/AD6Ukc0a2ssbQK0jkFZSeU/CumKluzJ26EVJRRViCiiimAUUlFABRRRQAUUUUAFFFFADl2bRu3Zz0H+frUpFt2MnQ8moKKQFmY2mD5QkzxjJ/OoPkLseQnYd6bRQBYt/s3lyefv38bNv60kv2bzj5XmGPPGeoqCigCyv2UI2d5bb8v1oH2XIzvA3c8/w4/xqtRRYB7bPlC59ye9Pi8n7Qvm7vJz82OpqGigC2wsyo2l1POf6VH+4387tvHOfzqCiiwE7fZwBgsxyc9sjsahpKKAFpKKKYBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAf//Z" alt="入居日と、引越しの日取り"><div class="ec-t">入居日と、引越しの日取り</div></a>
-    <a class="en-card" href="heya-sagashi-kimaranakatta.html"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCAB8ANwDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDlKcqlj8oJ+lNpQSOhxXoHEP8ALf8AuN+VGxt2Npz6YpA7DoxH40bmzncc+uaBkn2eYEAxNnp0/CmvG8ZG9SuemaTzZD/G350jMzfeJP1NABRRRQIKWkpaACiiigBaKSigBaSiigAooooAKSiigAoopKACiiigAoopDQAUlLSUAFFFFMBaWkopALRRRQAUtJRQAtFFFABS0lFAC0UlFAC0UlFABRRRQAUUUlAC0lFFABRRSUAFFFJQAUUUUxhRSUUALRSggDBUH3yatR3UKIoNqjEIVJJ6n1qW2tkNK5VzS1P9oi3ki3XaQvBPp1596kW7twgDWUZIYtndjt0/rUuUuwWXcqUVJLKrqgWMJtGCR3qKqQhaKKKYgpaSigBaKSigBaKSigAooooAKKKKACikzRQAZopKKACiiimMKSiigAooooA19As7aafzrqWEqhwIXYAMexbJHy+uOfap4tPt7fVLiNtrbIHfypU3mJuMAgcN17fpWHGzJIroMshDDjNTR3d1HcSypK6zSgh2H3jnk1DTvuUmXtXiiWxtJY0jDs8gZo4TFkDbjg/U81rW2nafPbXDyLGkYiidjkq8a9ckAEZwM8dR2Fc1PdXE8aR3EryKhJXeckZxnk/QVPLqd+ZkMk7rJE2VGAuDjHIx6cc9uKTi7WuF0XdHsLOe2vJLpi3lI2GUkKORyPlPv/hVfT7SOW0urhzDtjZU/fOVADBuRjnIwOMGmRalqNpbhYpHhjkJdWCgZyecH04HAqrE8scqzKoLFjgsgYE/QjB60a66hoaNnYw29xO1+plhgiEg8phtk3D5Rn3yPyqtd20UDxRb2WVtrNv+6qsAV565GeeO1CvfDUjOQ5uoj5hLjptGen07VJNJqOszbmUzNGAAAANo6AfSlzJathbyG6jHDbagLfyXWOEBXOcNL3LdwM9vbFTXX2GHT4WSybzbhWZXeYnYASOwAJyD+lVL43KtFDdY3QxhUGQSFPIGR9ajF1MLU23mEwk7thAIB9R6fhVLVJoT0Zp/2ZHJo1o8ODdzu5ALryAOmM57Ht1rH/CrUGo3NvCIo3UAZ2koCyZ67SRkZ9qgMztAkJbMaElR6Z6/yppMHYZmjNJRTJFzRSUUwFpKKKQwooopgFFJRQAUUUUAFFFFABRRRQBZshJuZobpbeQccuU3D69Kdtk+3EteRiX7wm8wkE/7w71UoqHHVsdzRXP2+F725huEAJYtJ5mFHb6+nvT9Rugw/exwPNMhaQpj5TuyvI7gfz5rLoqPZK6b6Fc+ljWme0uYZJNnloI8KWl+beFA4QdiR/8AXqRp40sAoW2KwxgggAkzEg8Z56DntwaxaKn2C0Vx850OmatBAZmEk0byK7bT8yJwTtGT1J/wp+kalax3txI0jhDtIa4YEgZGV98VzdFRLCQlfzGq0lbyNrVWh1C/ZknhjCQ7y5bh2x0HvWNSUVvTgoRUV0IlLmdxaKSitCRaKSigBaSiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/Z" alt="本日、物件が決まらなかった方へ"><div class="ec-t">本日、物件が決まらなかった方へ</div></a>
+    <a class="en-card next" href="heya-sagashi-kimaranakatta.html"><span class="en-badge">次へ</span><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCAB8ANwDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDlKcqlj8oJ+lNpQSOhxXoHEP8ALf8AuN+VGxt2Npz6YpA7DoxH40bmzncc+uaBkn2eYEAxNnp0/CmvG8ZG9SuemaTzZD/G350jMzfeJP1NABRRRQIKWkpaACiiigBaKSigBaSiigAooooAKSiigAoopKACiiigAoopDQAUlLSUAFFFFMBaWkopALRRRQAUtJRQAtFFFABS0lFAC0UlFAC0UlFABRRRQAUUUlAC0lFFABRRSUAFFFJQAUUUUxhRSUUALRSggDBUH3yatR3UKIoNqjEIVJJ6n1qW2tkNK5VzS1P9oi3ki3XaQvBPp1596kW7twgDWUZIYtndjt0/rUuUuwWXcqUVJLKrqgWMJtGCR3qKqQhaKKKYgpaSigBaKSigBaKSigAooooAKKKKACikzRQAZopKKACiiimMKSiigAooooA19As7aafzrqWEqhwIXYAMexbJHy+uOfap4tPt7fVLiNtrbIHfypU3mJuMAgcN17fpWHGzJIroMshDDjNTR3d1HcSypK6zSgh2H3jnk1DTvuUmXtXiiWxtJY0jDs8gZo4TFkDbjg/U81rW2nafPbXDyLGkYiidjkq8a9ckAEZwM8dR2Fc1PdXE8aR3EryKhJXeckZxnk/QVPLqd+ZkMk7rJE2VGAuDjHIx6cc9uKTi7WuF0XdHsLOe2vJLpi3lI2GUkKORyPlPv/hVfT7SOW0urhzDtjZU/fOVADBuRjnIwOMGmRalqNpbhYpHhjkJdWCgZyecH04HAqrE8scqzKoLFjgsgYE/QjB60a66hoaNnYw29xO1+plhgiEg8phtk3D5Rn3yPyqtd20UDxRb2WVtrNv+6qsAV565GeeO1CvfDUjOQ5uoj5hLjptGen07VJNJqOszbmUzNGAAAANo6AfSlzJathbyG6jHDbagLfyXWOEBXOcNL3LdwM9vbFTXX2GHT4WSybzbhWZXeYnYASOwAJyD+lVL43KtFDdY3QxhUGQSFPIGR9ajF1MLU23mEwk7thAIB9R6fhVLVJoT0Zp/2ZHJo1o8ODdzu5ALryAOmM57Ht1rH/CrUGo3NvCIo3UAZ2koCyZ67SRkZ9qgMztAkJbMaElR6Z6/yppMHYZmjNJRTJFzRSUUwFpKKKQwooopgFFJRQAUUUUAFFFFABRRRQBZshJuZobpbeQccuU3D69Kdtk+3EteRiX7wm8wkE/7w71UoqHHVsdzRXP2+F725huEAJYtJ5mFHb6+nvT9Rugw/exwPNMhaQpj5TuyvI7gfz5rLoqPZK6b6Fc+ljWme0uYZJNnloI8KWl+beFA4QdiR/8AXqRp40sAoW2KwxgggAkzEg8Z56DntwaxaKn2C0Vx850OmatBAZmEk0byK7bT8yJwTtGT1J/wp+kalax3txI0jhDtIa4YEgZGV98VzdFRLCQlfzGq0lbyNrVWh1C/ZknhjCQ7y5bh2x0HvWNSUVvTgoRUV0IlLmdxaKSitCRaKSigBaSiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/Z" alt="本日、物件が決まらなかった方へ"><div class="ec-t">本日、物件が決まらなかった方へ</div></a>
   </div>
   <div class="en-bar">
     <a class="en-ghost" href="index.html">☰ 資料一覧へ戻る</a>
@@ -324,7 +441,7 @@
 <div class="nav">
   <button id="prev" aria-label="前へ">‹</button>
   <div class="dots" id="dots"></div>
-  <span class="counter" id="counter">1 / 6</span>
+  <span class="counter" id="counter">1 / 11</span>
   <button id="next" aria-label="次へ">›</button>
 </div>
 
@@ -358,6 +475,68 @@
     else{document.exitFullscreen&&document.exitFullscreen();}}
   document.getElementById('fs').addEventListener('click',e=>{e.stopPropagation();toggleFs();});
   setTimeout(()=>{const h=document.getElementById('hint');if(h)h.style.opacity='0';},4200);
+</script>
+<aside class="cpanel">
+  <div class="ch">
+    <div class="t">🗒 決定した条件</div>
+    <div class="s">話しながら入力／この端末に自動保存</div>
+    <div class="row">
+      <div class="cf"><label>お客様名</label><input id="cf_name" placeholder="山田 太郎"></div>
+      <div class="cf" style="max-width:144px"><label>日付</label><input id="cf_date" type="date"></div>
+    </div>
+  </div>
+  <div class="body">
+    <div class="grp" data-g="1"><div class="gh"><span class="pill">コツ①</span>必須 / 希望</div>
+      <div class="flds"><div class="cf"><label>必須</label><textarea id="cf_must" placeholder="家賃・徒歩・広さ…"></textarea></div><div class="cf"><label>希望</label><textarea id="cf_hope" placeholder="2F以上・独立洗面…"></textarea></div></div></div>
+    <div class="grp" data-g="2"><div class="gh"><span class="pill">コツ②</span>必須条件を極限まで</div>
+      <div class="flds"><div class="cf"><label>家賃 上限</label><input id="cf_rent" placeholder="9.0万"></div><div class="cf"><label>徒歩</label><input id="cf_walk" placeholder="10分以内"></div><div class="cf"><label>広さ</label><input id="cf_size" placeholder="25㎡〜"></div></div></div>
+    <div class="grp" data-g="3"><div class="gh"><span class="pill">コツ③</span>沿線（3つまで）</div>
+      <div class="flds"><div class="cf"><label>①</label><input id="cf_line1"></div><div class="cf"><label>②</label><input id="cf_line2"></div><div class="cf"><label>③</label><input id="cf_line3"></div></div></div>
+    <div class="grp" data-g="6 7 8 9 5"><div class="gh"><span class="pill">日取り</span>入居・スケジュール</div>
+      <div class="flds"><div class="cf"><label>リミット</label><input id="cf_limit" placeholder="2/末"></div><div class="cf"><label>最速入居</label><input id="cf_fastest"></div><div class="cf"><label>入居日の幅</label><input id="cf_span" placeholder="1ヶ月"></div></div></div>
+    <div class="grp" data-g="4"><div class="gh"><span class="pill">メモ</span>採点・その他</div>
+      <div class="flds"><div class="cf"><label></label><textarea id="cf_memo" placeholder="担当者と採点をすり合わせ…"></textarea></div></div></div>
+  </div>
+  <div class="savebar">
+    <span class="cnt">保存済み <b id="cf_count">0</b> 件</span>
+    <span><button class="btn-n ghost" id="cf_new">＋ 新規</button> <button class="btn-n gold" id="cf_save">保存</button></span>
+  </div>
+</aside>
+<script>
+(function(){
+  var KEY='avlib:consults', CUR='avlib:consult_current';
+  var FIELDS=['name','date','rent','walk','size','line1','line2','line3','limit','fastest','span','must','hope','memo'];
+  function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')||[]}catch(e){return []}}
+  function save(a){try{localStorage.setItem(KEY,JSON.stringify(a))}catch(e){}}
+  function curId(){var id=localStorage.getItem(CUR); if(!id){id='c'+Date.now(); localStorage.setItem(CUR,id);} return id;}
+  function el(f){return document.getElementById('cf_'+f);}
+  function rec(){var a=load(), id=curId(), r=null; for(var i=0;i<a.length;i++){if(a[i].id===id){r=a[i];break;}} if(!r){r={id:id}; a.push(r);} return {a:a,r:r};}
+  function updateCount(){var c=document.getElementById('cf_count'); if(c){var n=0,a=load(); for(var i=0;i<a.length;i++){if((a[i].name&&a[i].name.trim())||a[i].date)n++;} c.textContent=n;}}
+  function flush(){var o=rec(); for(var i=0;i<FIELDS.length;i++){var e=el(FIELDS[i]); o.r[FIELDS[i]]=e?e.value:'';} o.r.updatedAt=Date.now(); save(o.a); updateCount();}
+  function loadCur(){var o=rec(); for(var i=0;i<FIELDS.length;i++){var e=el(FIELDS[i]); if(e)e.value=o.r[FIELDS[i]]||'';}}
+  function neww(){flush(); localStorage.setItem(CUR,'c'+Date.now()); for(var i=0;i<FIELDS.length;i++){var e=el(FIELDS[i]); if(e)e.value='';} flush(); var n=el('name'); if(n)n.focus();}
+  function highlight(){
+    var sl=document.querySelectorAll('.slide'); var idx=-1;
+    for(var i=0;i<sl.length;i++){ if(sl[i].classList.contains('active')){idx=i;break;} }
+    var grps=document.querySelectorAll('.cpanel .grp');
+    grps.forEach(function(g){
+      var map=(g.getAttribute('data-g')||'').split(' ');
+      g.classList.toggle('cur', map.indexOf(String(idx))>=0);
+    });
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    for(var i=0;i<FIELDS.length;i++){var e=el(FIELDS[i]); if(e){e.addEventListener('input',flush); e.addEventListener('change',flush);}}
+    var nb=document.getElementById('cf_new'); if(nb)nb.addEventListener('click',function(ev){ev.stopPropagation(); neww();});
+    var sb=document.getElementById('cf_save'); if(sb)sb.addEventListener('click',function(ev){ev.stopPropagation(); flush(); sb.textContent='保存しました'; setTimeout(function(){sb.textContent='保存';},1200);});
+    document.querySelectorAll('.cpanel input,.cpanel textarea,.cpanel button').forEach(function(e){
+      e.addEventListener('keydown',function(ev){ev.stopPropagation();});
+      e.addEventListener('click',function(ev){ev.stopPropagation();});
+    });
+    loadCur(); updateCount(); highlight();
+    var deck=document.getElementById('deck');
+    if(deck && window.MutationObserver){ new MutationObserver(highlight).observe(deck,{attributes:true,subtree:true,attributeFilter:['class']}); }
+  });
+})();
 </script>
 </body>
 </html>
