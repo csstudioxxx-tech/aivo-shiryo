@@ -92,6 +92,8 @@
   .addline{margin-top:6px;width:100%;border:1.5px dashed #c9cfd9;background:#fafbfd;color:#5a6473;border-radius:9px;padding:7px;font-family:var(--zen);font-weight:700;font-size:12px;cursor:pointer}
   .addline:hover{border-color:var(--gold);color:var(--gold)}
   .cpanel .hint{font-weight:700;color:var(--gold);font-size:.86em;margin-left:4px}
+  .cpanel .flds{align-items:flex-start}
+  .cpanel .subhint{display:block;margin-top:3px;font-size:9.5px;font-weight:700;color:var(--gold)}
   /* 二重賃料ガント（11p）*/
   .ovl{--lw:clamp(48px,6.6vw,76px);--gap:clamp(8px,1.1vw,14px);margin:clamp(12px,2vh,20px) 0 clamp(8px,1.2vh,14px);background:#fff;border:1px solid #e6e9ef;border-radius:16px;padding:clamp(16px,2.2vw,24px) clamp(16px,2.2vw,24px) clamp(16px,2.2vw,22px);box-shadow:0 4px 16px rgba(0,0,0,.05)}
   .ovl-marks{position:relative;height:clamp(18px,2.4vh,24px);margin-left:calc(var(--lw) + var(--gap))}
@@ -115,6 +117,17 @@
   .ovl-ph i{font-style:normal;font-weight:700;font-size:clamp(9.5px,1.1vw,13px)}
   .ovl-ph.one{background:#f1f4f9;color:var(--ink-soft)}
   .ovl-ph.two{background:#fdeeee;border:2px solid var(--warn);color:var(--warn)}
+  /* サイドバー 沿線カード */
+  .cpanel .lines{display:flex;flex-direction:column;gap:8px;padding:0 4px}
+  .lineitem{border:1px solid #e7ebf1;border-radius:10px;padding:7px 9px 8px;background:#fcfdfe}
+  .lineitem .li-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+  .lineitem .li-no{font-size:10.5px;font-weight:800;color:var(--navy)}
+  .lineitem .li-rm{border:none;background:none;color:#c3cad4;font-size:15px;line-height:1;cursor:pointer;padding:0 2px}
+  .lineitem .li-rm:hover{color:var(--warn)}
+  .li-fields{display:flex;flex-direction:column;gap:6px}
+  .li-f label{display:block;font-size:9.5px;color:#94a0af;font-weight:700;margin-bottom:2px}
+  .li-f input{font-family:var(--noto);font-size:13px;font-weight:600;color:var(--ink);background:#fff;border:1.5px solid #e6eaf0;border-radius:8px;padding:7px 9px;width:100%;outline:none;text-overflow:ellipsis}
+  .li-f input:focus{border-color:var(--gold)}
 
   .figure{margin-top:clamp(26px,4.2vh,50px)}
 
@@ -312,13 +325,47 @@ body.has-panel .fsbtn{right:420px}
 .cf input,.cf textarea{font-family:var(--noto);font-size:13px;font-weight:600;color:var(--ink);background:#fff;border:1.5px solid #e6eaf0;border-radius:9px;padding:7px 9px;width:100%;outline:none}
 .cf input:focus,.cf textarea:focus{border-color:var(--gold)}
 .cf textarea{resize:vertical;min-height:44px;line-height:1.4}
-.cpanel .savebar{padding:10px 16px;border-top:1px solid #e9edf3;background:#fff;display:flex;align-items:center;justify-content:space-between}
+.cpanel .savebar{padding:10px 14px;border-top:1px solid #e9edf3;background:#fff;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+  .cpanel .sb-btns{display:flex;gap:6px}
+  .cpanel .savebar .btn-n{font-size:11.5px;padding:8px 11px}
 .cpanel .savebar .cnt{font-size:11px;color:#94a0af;font-weight:700}
 .cpanel .savebar .cnt b{color:var(--navy)}
 .btn-n{font-family:var(--zen);font-weight:900;font-size:12.5px;border-radius:999px;border:none;cursor:pointer;padding:9px 15px}
 .btn-n.gold{background:var(--gold-bright);color:var(--navy)}
 .btn-n.ghost{background:#fff;color:var(--navy);border:1.5px solid #e6eaf0}
 .btn-n:active{transform:translateY(1px)}
+/* ===== PDFレポート（印刷時のみ表示）===== */
+#cf_report{display:none}
+#cf_report{font-family:var(--zen);color:#1a2230}
+#cf_report .rp-head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--navy);padding-bottom:10px;margin-bottom:4px}
+#cf_report .rp-brand{font-size:12px;font-weight:800;color:var(--gold);letter-spacing:.04em}
+#cf_report .rp-title{font-size:22px;font-weight:900;color:var(--navy);margin-top:2px}
+#cf_report .rp-meta{text-align:right;font-size:12px;color:#444}
+#cf_report .rp-meta .rp-name{font-size:17px;font-weight:900;color:#1a2230}
+#cf_report .rp-sec{margin-top:16px;break-inside:avoid}
+#cf_report .rp-sh{display:inline-block;font-size:12px;font-weight:900;color:#fff;background:var(--navy);border-radius:6px;padding:3px 11px;margin-bottom:8px}
+#cf_report .rp-grid{display:flex;gap:10px}
+#cf_report .rp-cell{flex:1;border:1px solid #d8dee8;border-radius:9px;padding:9px 12px}
+#cf_report .rp-k{font-size:10.5px;color:#8a93a2;font-weight:700;margin-bottom:3px}
+#cf_report .rp-v{font-size:15px;font-weight:800;color:#1a2230;min-height:18px}
+#cf_report .rp-2{display:flex;gap:10px}
+#cf_report .rp-2 .rp-cell{flex:1}
+#cf_report ol.rp-lines{margin:0;padding-left:0;list-style:none;counter-reset:ln}
+#cf_report ol.rp-lines li{counter-increment:ln;border:1px solid #d8dee8;border-radius:9px;padding:8px 12px;margin-bottom:6px;font-size:14px;display:flex;align-items:center;gap:10px}
+#cf_report ol.rp-lines li::before{content:counter(ln);flex:none;width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center}
+#cf_report ol.rp-lines li b{color:var(--navy)}
+#cf_report ol.rp-lines li .rp-rg{color:#333;font-weight:700}
+#cf_report ol.rp-lines li.empty{color:#aaa;justify-content:flex-start}
+#cf_report ol.rp-lines li.empty::before{background:#cbd2dc}
+#cf_report .rp-memo{border:1px solid #d8dee8;border-radius:9px;padding:10px 13px;font-size:14px;line-height:1.6;white-space:pre-wrap;min-height:40px}
+#cf_report .rp-foot{margin-top:22px;border-top:1px solid #d8dee8;padding-top:8px;font-size:10.5px;color:#8a93a2;text-align:center}
+@media print{
+  html,body{background:#fff !important}
+  body{visibility:hidden}
+  #cf_report,#cf_report *{visibility:visible}
+  #cf_report{display:block !important;position:absolute;left:0;top:0;width:100%}
+  @page{size:A4 portrait;margin:14mm}
+}
 @media (max-width:900px){
   body.has-panel .deck,body.has-panel .deck-next{right:0;bottom:300px}
   .cpanel{top:auto;bottom:0;width:100%;height:300px;border-left:none;border-top:1px solid #e6eaf0}
@@ -608,19 +655,20 @@ body.has-panel .fsbtn{right:420px}
       <div class="flds"><div class="cf"><label>家賃 上限</label><input id="cf_rent" placeholder="9.0万"></div><div class="cf"><label>徒歩</label><input id="cf_walk" placeholder="10分以内"></div><div class="cf"><label>広さ</label><input id="cf_size" placeholder="20㎡〜"></div></div></div>
     <div class="grp" data-g="3"><div class="gh"><span class="pill">コツ②</span>設備面等の必須・希望条件</div>
       <div class="flds"><div class="cf"><label>必須設備</label><textarea id="cf_eqmust" placeholder="独立洗面台・2口コンロ…"></textarea></div><div class="cf"><label>希望設備</label><textarea id="cf_eqhope" placeholder="南向き・2階以上…"></textarea></div></div></div>
-    <div class="grp" data-g="4"><div class="gh"><span class="pill">コツ③</span>沿線（○○線：××駅〜××駅／3つまで）</div>
-      <div class="flds" id="cf_lines"></div>
+    <div class="grp" data-g="4"><div class="gh"><span class="pill">コツ③</span>沿線（線名＋区間／3つまで）</div>
+      <div class="lines" id="cf_lines"></div>
       <button class="addline" id="cf_addline" type="button">＋ 沿線を追加</button></div>
     <div class="grp" data-g="6 7 8 9 10"><div class="gh"><span class="pill">日取り</span>入居・スケジュール</div>
-      <div class="flds"><div class="cf"><label>リミット</label><input id="cf_limit" placeholder="2/末"></div><div class="cf"><label>最速入居</label><input id="cf_fastest"></div><div class="cf"><label>入居日の幅 <span class="hint">30日以上推奨</span></label><input id="cf_span" placeholder="30日〜"></div></div></div>
+      <div class="flds"><div class="cf"><label>リミット</label><input id="cf_limit" placeholder="2/末"></div><div class="cf"><label>最速入居</label><input id="cf_fastest"></div><div class="cf"><label>入居日の幅</label><input id="cf_span" placeholder="30日〜"><span class="subhint">※30日以上推奨</span></div></div></div>
     <div class="grp" data-g="5"><div class="gh"><span class="pill">メモ</span>採点・その他</div>
       <div class="flds"><div class="cf"><label></label><textarea id="cf_memo" placeholder="担当者と採点をすり合わせ…"></textarea></div></div></div>
   </div>
   <div class="savebar">
     <span class="cnt">保存済み <b id="cf_count">0</b> 件</span>
-    <span><button class="btn-n ghost" id="cf_new">＋ 新規</button> <button class="btn-n gold" id="cf_save">保存</button></span>
+    <span class="sb-btns"><button class="btn-n ghost" id="cf_pdf">🖨 PDF</button><button class="btn-n ghost" id="cf_new">＋新規</button><button class="btn-n gold" id="cf_save">保存</button></span>
   </div>
 </aside>
+<div id="cf_report" aria-hidden="true"></div>
 <script>
 (function(){
   var KEY='avlib:consults', CUR='avlib:consult_current';
@@ -633,14 +681,49 @@ body.has-panel .fsbtn{right:420px}
   function rec(){var a=load(), id=curId(), r=null; for(var i=0;i<a.length;i++){if(a[i].id===id){r=a[i];break;}} if(!r){r={id:id}; a.push(r);} return {a:a,r:r};}
   function updateCount(){var c=document.getElementById('cf_count'); if(c){var n=0,a=load(); for(var i=0;i<a.length;i++){if((a[i].name&&a[i].name.trim())||a[i].date)n++;} c.textContent=n;}}
   function lineBox(){return document.getElementById('cf_lines');}
-  function lineInputs(){var b=lineBox(); return b?b.querySelectorAll('.cf_line'):[];}
+  function lineItems(){var b=lineBox(); return b?b.querySelectorAll('.lineitem'):[];}
+  function renumber(){var it=lineItems(); for(var i=0;i<it.length;i++){var h=it[i].querySelector('.li-no'); if(h)h.textContent='沿線'+(CIRC[i+1]||('#'+(i+1)));}}
   function bindField(e){e.addEventListener('input',flush); e.addEventListener('change',flush); e.addEventListener('keydown',function(ev){ev.stopPropagation();}); e.addEventListener('click',function(ev){ev.stopPropagation();});}
-  function addLineRow(val){var box=lineBox(); if(!box)return null; var n=box.querySelectorAll('.cf_line').length+1; var d=document.createElement('div'); d.className='cf'; var lab=document.createElement('label'); lab.textContent='沿線'+(CIRC[n]||('#'+n)); var inp=document.createElement('input'); inp.className='cf_line'; inp.placeholder='○○線：××駅〜××駅'; inp.value=val||''; d.appendChild(lab); d.appendChild(inp); box.appendChild(d); bindField(inp); return inp;}
-  function setLines(arr){var box=lineBox(); if(!box)return; box.innerHTML=''; var a=(arr&&arr.length)?arr.slice():['','','']; while(a.length<3)a.push(''); for(var i=0;i<a.length;i++){addLineRow(a[i]);}}
-  function getLines(){var out=[]; var ins=lineInputs(); for(var i=0;i<ins.length;i++)out.push(ins[i].value); return out;}
+  function addLineRow(obj){
+    if(typeof obj==='string')obj={name:'',range:obj}; obj=obj||{};
+    var box=lineBox(); if(!box)return null;
+    var it=document.createElement('div'); it.className='lineitem';
+    it.innerHTML='<div class="li-head"><span class="li-no"></span><button class="li-rm" type="button" title="削除">×</button></div><div class="li-fields"><div class="li-f"><label>線名</label><input class="cf_lname" placeholder="○○線"></div><div class="li-f"><label>区間（駅〜駅）</label><input class="cf_lrange" placeholder="××駅 〜 ××駅"></div></div>';
+    box.appendChild(it);
+    var nm=it.querySelector('.cf_lname'), rg=it.querySelector('.cf_lrange');
+    nm.value=obj.name||''; rg.value=obj.range||''; bindField(nm); bindField(rg);
+    var rm=it.querySelector('.li-rm');
+    rm.addEventListener('click',function(ev){ev.stopPropagation(); it.parentNode.removeChild(it); renumber(); flush();});
+    rm.addEventListener('keydown',function(ev){ev.stopPropagation();});
+    renumber(); return nm;}
+  function setLines(arr){var box=lineBox(); if(!box)return; box.innerHTML=''; var a=(arr&&arr.length)?arr.slice():[]; while(a.length<3)a.push({name:'',range:''}); for(var i=0;i<a.length;i++){addLineRow(a[i]);}}
+  function getLines(){var out=[], it=lineItems(); for(var i=0;i<it.length;i++){var nm=it[i].querySelector('.cf_lname'), rg=it[i].querySelector('.cf_lrange'); out.push({name:nm?nm.value:'', range:rg?rg.value:''});} return out;}
   function flush(){var o=rec(); for(var i=0;i<FIELDS.length;i++){var e=el(FIELDS[i]); o.r[FIELDS[i]]=e?e.value:'';} o.r.lines=getLines(); o.r.updatedAt=Date.now(); save(o.a); updateCount();}
   function loadCur(){var o=rec(); for(var i=0;i<FIELDS.length;i++){var e=el(FIELDS[i]); if(e)e.value=o.r[FIELDS[i]]||'';} setLines(o.r.lines||['','','']);}
   function neww(){flush(); localStorage.setItem(CUR,'c'+Date.now()); for(var i=0;i<FIELDS.length;i++){var e=el(FIELDS[i]); if(e)e.value='';} setLines(['','','']); flush(); var n=el('name'); if(n)n.focus();}
+  function val(f){var e=el(f); return e?e.value:'';}
+  function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function dispDate(d){ if(!d)return '—'; var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(d); return m? (m[1]+'年'+(+m[2])+'月'+(+m[3])+'日') : d; }
+  function buildReport(){
+    var rp=document.getElementById('cf_report'); if(!rp)return;
+    var name=val('name')||'お客様';
+    var lines=getLines().filter(function(l){return (l.name||l.range);});
+    var linesHtml = lines.length ? '<ol class="rp-lines">'+lines.map(function(l){return '<li><b>'+esc(l.name||'（線名未入力）')+'</b><span class="rp-rg">'+(l.range?'：'+esc(l.range):'')+'</span></li>';}).join('')+'</ol>'
+                                 : '<ol class="rp-lines"><li class="empty">（未入力）</li></ol>';
+    function cell(k,v){return '<div class="rp-cell"><div class="rp-k">'+k+'</div><div class="rp-v">'+(esc(v)||'—')+'</div></div>';}
+    rp.innerHTML =
+      '<div class="rp-head">'
+        +'<div><div class="rp-brand">アイ・ボヤージ 賃貸企画室</div><div class="rp-title">部屋探し条件シート</div></div>'
+        +'<div class="rp-meta"><div class="rp-name">'+esc(name)+' 様</div><div>作成日：'+dispDate(val('date'))+'</div></div>'
+      +'</div>'
+      +'<div class="rp-sec"><span class="rp-sh">コツ① 最初に決めること</span><div class="rp-grid">'+cell('家賃 上限',val('rent'))+cell('駅徒歩',val('walk'))+cell('広さ',val('size'))+'</div></div>'
+      +'<div class="rp-sec"><span class="rp-sh">コツ② 設備（必須・希望）</span><div class="rp-2">'+cell('必須設備',val('eqmust'))+cell('希望設備',val('eqhope'))+'</div></div>'
+      +'<div class="rp-sec"><span class="rp-sh">コツ③ 沿線（線名＋区間）</span>'+linesHtml+'</div>'
+      +'<div class="rp-sec"><span class="rp-sh">日取り（入居・スケジュール）</span><div class="rp-grid">'+cell('リミット',val('limit'))+cell('最速入居',val('fastest'))+cell('入居日の幅',val('span'))+'</div></div>'
+      +'<div class="rp-sec"><span class="rp-sh">メモ（採点・その他）</span><div class="rp-memo">'+(esc(val('memo'))||'—')+'</div></div>'
+      +'<div class="rp-foot">株式会社アイ・ボヤージ 賃貸企画室　／　本シートはご相談内容の控えです</div>';
+  }
+  function exportPDF(){ flush(); buildReport(); window.print(); }
   function highlight(){
     var sl=document.querySelectorAll('.slide'); var idx=-1;
     for(var i=0;i<sl.length;i++){ if(sl[i].classList.contains('active')){idx=i;break;} }
@@ -652,6 +735,7 @@ body.has-panel .fsbtn{right:420px}
     var add=document.getElementById('cf_addline'); if(add){add.addEventListener('click',function(ev){ev.stopPropagation(); var inp=addLineRow(''); if(inp)inp.focus(); flush();}); add.addEventListener('keydown',function(ev){ev.stopPropagation();});}
     var nb=document.getElementById('cf_new'); if(nb)nb.addEventListener('click',function(ev){ev.stopPropagation(); neww();});
     var sb=document.getElementById('cf_save'); if(sb)sb.addEventListener('click',function(ev){ev.stopPropagation(); flush(); sb.textContent='保存しました'; setTimeout(function(){sb.textContent='保存';},1200);});
+    var pb=document.getElementById('cf_pdf'); if(pb){pb.addEventListener('click',function(ev){ev.stopPropagation(); exportPDF();}); pb.addEventListener('keydown',function(ev){ev.stopPropagation();});}
     document.querySelectorAll('.cpanel input,.cpanel textarea,.cpanel button').forEach(function(e){ e.addEventListener('keydown',function(ev){ev.stopPropagation();}); e.addEventListener('click',function(ev){ev.stopPropagation();}); });
     loadCur(); updateCount(); highlight();
     var deck=document.getElementById('deck');
